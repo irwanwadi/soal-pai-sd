@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Soal SAS PAI & Budi Pekerti SD (Kelas 1 - 6)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 1.45rem;
+            line-height: 2.2rem;
+            direction: rtl;
+        }
+        .tab-active {
+            background-color: #047857;
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(4, 120, 87, 0.25);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background-color: white;
+            }
+            .question-card {
+                break-inside: avoid;
+                border: 1px solid #e2e8f0;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-700 text-white shadow-lg sticky top-0 z-30 no-print">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="bg-emerald-900/60 text-emerald-100 text-xs font-semibold px-2.5 py-1 rounded-full border border-emerald-500/30">Kurikulum Merdeka • TA 2026/2027</span>
+                        <span class="bg-amber-500/20 text-amber-200 text-xs font-semibold px-2.5 py-1 rounded-full border border-amber-400/30">SAS Ganjil</span>
+                    </div>
+                    <h1 class="text-xl md:text-2xl font-bold mt-1 tracking-tight">Bank Soal PAI & Budi Pekerti SD</h1>
+                    <p class="text-emerald-100 text-xs md:text-sm">Lengkap Kelas 1 s.d. Kelas 6 • Kunci Jawaban & Pembahasan Singkat</p>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <button id="examModeBtn" onclick="toggleExamMode()" class="flex items-center gap-1.5 bg-amber-400 text-slate-900 hover:bg-amber-300 font-bold text-xs md:text-sm px-3.5 py-2 rounded-xl shadow transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="examModeText">Mode Ujian (Simulasi)</span>
+                    </button>
+                    <button id="toggleAnswersBtn" onclick="toggleAllAnswers()" class="flex items-center gap-1.5 bg-white text-emerald-800 hover:bg-emerald-50 font-semibold text-xs md:text-sm px-3.5 py-2 rounded-xl shadow transition">
+                        <svg id="eyeIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                        <span id="toggleAnswersText">Tampilkan Semua Kunci</span>
+                    </button>
+                    <button onclick="copyCurrentQuestions()" class="flex items-center gap-1.5 bg-emerald-900/50 hover:bg-emerald-900 text-white border border-emerald-500/40 font-medium text-xs md:text-sm px-3.5 py-2 rounded-xl transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                        <span>Salin Teks</span>
+                    </button>
+                    <button onclick="printWorkoutSheet()" class="flex items-center gap-1.5 bg-emerald-900/50 hover:bg-emerald-900 text-white border border-emerald-500/40 font-medium text-xs md:text-sm px-3.5 py-2 rounded-xl transition" title="Cetak soal tanpa kunci jawaban untuk latihan tulis">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path></svg>
+                        <span>Cetak Latihan</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Class Selector Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto pt-4 pb-1 mt-2 border-t border-emerald-600/50">
+                <button onclick="selectGrade(1)" id="tab-1" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition bg-emerald-900/40 text-emerald-100 hover:bg-emerald-900/70">Kelas 1 (25 Soal)</button>
+                <button onclick="selectGrade(2)" id="tab-2" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition bg-emerald-900/40 text-emerald-100 hover:bg-emerald-900/70">Kelas 2 (25 Soal)</button>
+                <button onclick="selectGrade(3)" id="tab-3" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition bg-emerald-900/40 text-emerald-100 hover:bg-emerald-900/70">Kelas 3 (30 Soal)</button>
+                <button onclick="selectGrade(4)" id="tab-4" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition bg-emerald-900/40 text-emerald-100 hover:bg-emerald-900/70">Kelas 4 (45 Soal)</button>
+                <button onclick="selectGrade(5)" id="tab-5" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition bg-emerald-900/40 text-emerald-100 hover:bg-emerald-900/70">Kelas 5 (45 Soal)</button>
+                <button onclick="selectGrade(6)" id="tab-6" class="tab-btn px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap transition bg-emerald-900/40 text-emerald-100 hover:bg-emerald-900/70">Kelas 6 (25 Soal)</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl text-sm font-medium transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2">
+        <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+        <span id="toastMsg">Berhasil disalin ke clipboard!</span>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-6">
+        
+        <!-- Grade Info Banner & Search/Filter -->
+        <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 mb-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 id="gradeTitle" class="text-lg md:text-xl font-bold text-slate-900">Soal SAS Kelas 1 SD</h2>
+                    <p id="gradeSubtitle" class="text-sm text-slate-500 mt-0.5">Fase A • Jumlah: 25 Soal Pilihan Ganda (Opsi A - C)</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-2 no-print">
+                    <select id="elementFilter" onchange="renderQuestions()" class="bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        <option value="ALL">Semua Elemen / Bab</option>
+                    </select>
+                    <input type="text" id="searchInput" oninput="renderQuestions()" placeholder="Cari kata kunci soal..." class="bg-slate-50 border border-slate-300 text-slate-700 text-sm rounded-xl px-3.5 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+            </div>
+
+            <!-- Interactive Score Bar -->
+            <div class="mt-4 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3 no-print">
+                <div class="flex items-center gap-4 text-sm">
+                    <span id="modeBadge" class="bg-blue-50 text-blue-700 font-semibold px-2.5 py-0.5 rounded-lg border border-blue-200 text-xs">Mode Belajar (Langsung Koreksi)</span>
+                    <span class="text-slate-600">Terjawab: <strong id="answeredCount" class="text-slate-900">0</strong>/<span id="totalCount">25</span></span>
+                    <span id="liveStats" class="flex items-center gap-3">
+                        <span class="text-emerald-700">Benar: <strong id="correctCount">0</strong></span>
+                        <span class="bg-emerald-50 text-emerald-800 font-semibold px-2.5 py-0.5 rounded-lg border border-emerald-200">Skor: <span id="scoreValue">0</span></span>
+                    </span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="finishExamBtn" onclick="finishExam()" class="hidden bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3.5 py-1.5 rounded-lg shadow transition">Selesai & Lihat Nilai</button>
+                    <button onclick="resetQuiz()" class="text-xs font-medium text-rose-600 hover:text-rose-700 hover:underline">Reset Jawaban</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Banner for Exam Mode -->
+        <div id="examResultBanner" class="hidden bg-gradient-to-br from-emerald-700 to-teal-800 text-white rounded-2xl p-6 shadow-lg mb-6 no-print">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase tracking-wider bg-white/20 px-2.5 py-1 rounded-full font-semibold">Hasil Simulasi Ujian</span>
+                    <h3 class="text-2xl font-bold mt-2" id="examResultTitle">Nilai Kamu: 100</h3>
+                    <p class="text-emerald-100 text-sm mt-1" id="examResultDesc">Hebat! Kamu menjawab benar 25 dari 25 soal. Gulir ke bawah untuk melihat pembahasan setiap soal.</p>
+                </div>
+                <button onclick="resetQuiz()" class="bg-white text-emerald-800 hover:bg-emerald-50 font-bold text-sm px-5 py-2.5 rounded-xl shadow shrink-0">Ulangi Simulasi</button>
+            </div>
+        </div>
+
+        <!-- Questions Container -->
+        <div id="questionsContainer" class="space-y-4">
+            <!-- Rendered dynamically via JS -->
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="max-w-5xl mx-auto px-4 py-8 text-center text-xs text-slate-400 border-t border-slate-200 mt-10">
+        <p>Disusun berdasarkan Kisi-Kisi Soal Sumatif Akhir Semester (SAS) Pendidikan Agama Islam dan Budi Pekerti Kurikulum Merdeka.</p>
+    </footer>
+
+    <script>
+        // Database lengkap soal Kelas 1 - 6 sesuai lampiran dokumen kisi-kisi
+        const bankSoal = {
+            1: {
+                title: "Soal SAS Kelas 1 SD - PAI & Budi Pekerti",
+                subtitle: "Fase A / Kelas 1 • 25 Soal Pilihan Ganda (Opsi A - C)",
+                questions: [
+                    { no: 1, elemen: "Al-Qur'an dan Hadis", q: "Perhatikan huruf berikut ini: <span class='arabic'>ج</span>. Nama yang tepat untuk huruf tersebut adalah ...", opts: ["Jim", "Ha", "Kha"], ans: 0, exp: "Huruf ج memiliki satu titik di tengah (perutnya) dan dibaca Jim." },
+                    { no: 2, elemen: "Al-Qur'an dan Hadis", q: "Huruf yang termasuk dalam kelompok makhraj Al-Halq (Tenggorokan) adalah ...", opts: ["Ba (<span class='arabic'>ب</span>)", "Ta (<span class='arabic'>ت</span>)", "Ha (<span class='arabic'>ح</span>)"], ans: 2, exp: "Huruf Ha (ح) keluar dari tenggorokan bagian tengah (wasthul halq), sedangkan Ba dan Ta dari bibir dan ujung lidah." },
+                    { no: 3, elemen: "Al-Qur'an dan Hadis", q: "Tanda baca yang berbentuk garis miring dan terletak di atas huruf hijaiah sehingga menghasilkan bunyi 'a' disebut ...", opts: ["Kasrah", "Fathah", "Dammah"], ans: 1, exp: "Fathah adalah tanda baca garis miring di atas huruf yang menghasilkan bunyi vokal 'a'." },
+                    { no: 4, elemen: "Al-Qur'an dan Hadis", q: "Perhatikan kata berikut ini: <span class='arabic'>رُزِقَ</span> (Artinya: Telah diberi rezeki). Cara membaca kata di atas yang benar sesuai dengan harakatnya adalah ...", opts: ["Razaka", "Raziqu", "Ruziqa"], ans: 2, exp: "Huruf Ra berharakat dammah (ru), Zai berharakat kasrah (zi), dan Qaf berharakat fathah (qa) dibaca Ruziqa." },
+                    { no: 5, elemen: "Al-Qur'an dan Hadis", q: "Tanda baca yang harus diberikan pada huruf hijaiah agar berbunyi ‘u’ adalah ...", opts: ["Dammah", "Kasrah", "Fathah"], ans: 0, exp: "Dammah berbentuk seperti huruf wawu kecil di atas huruf dan menghasilkan bunyi vokal 'u'." },
+                    { no: 6, elemen: "Akidah", q: "Secara bahasa, kata Iman memiliki arti yaitu ...", opts: ["Membenarkan atau percaya", "Melaksanakan perintah", "Berserah diri sepenuhnya"], ans: 0, exp: "Secara bahasa (etimologi), iman berasal dari kata amina-yu'minu yang berarti percaya atau membenarkan." },
+                    { no: 7, elemen: "Akidah", q: "Urutan rukun iman untuk iman kepada kitab-kitab Allah dan rasul-rasul Allah adalah ...", opts: ["2 dan 3", "3 dan 4", "4 dan 5"], ans: 1, exp: "Rukun iman ke-1 Allah, ke-2 Malaikat, ke-3 Kitab-kitab Allah, ke-4 Rasul-rasul Allah, ke-5 Hari Akhir, ke-6 Qada dan Qadar." },
+                    { no: 8, elemen: "Akidah", q: "Ahmad menemukan dompet di halaman sekolah. Ahmad menyerahkan dompet itu kepada guru meskipun tidak ada yang melihatnya. Ahmad yakin bahwa setiap perbuatan manusia dicatat oleh malaikat, yaitu ...", opts: ["Malaikat diciptakan dari cahaya.", "Malaikat selalu taat kepada Allah.", "Malaikat mencatat perbuatan manusia."], ans: 2, exp: "Malaikat Raqib dan Atid bertugas mencatat seluruh amal baik dan buruk manusia kapan pun dan di mana pun." },
+                    { no: 9, elemen: "Akidah", q: "Perhatikan pernyataan berikut!<br>(1) Bersyukur saat mendapat nikmat.<br>(2) Putus asa saat gagal.<br>(3) Sabar dan tetap berusaha saat mendapat musibah.<br>(4) Sombong saat berhasil.<br>Perilaku yang baik sesuai iman kepada Qada dan Qadar ditunjukkan oleh nomor ...", opts: ["(1) dan (2)", "(1) dan (3)", "(3) dan (4)"], ans: 1, exp: "Orang yang beriman kepada takdir (Qada dan Qadar) akan bersyukur ketika mendapat nikmat (1) dan bersabar saat mendapat musibah (3)." },
+                    { no: 10, elemen: "Akidah", q: "Fatimah mengalami gagal panen karena cuaca buruk. Fatimah tetap sabar, berdoa, dan berusaha lagi. Sikap Fatimah menunjukkan iman kepada salah satu rukun iman, yaitu ...", opts: ["Kitab Allah", "Qada dan Qadar", "Malaikat"], ans: 1, exp: "Menerima ketetapan Allah (takdir) dengan sabar, berdoa, dan terus berikhtiar adalah bukti iman kepada Qada dan Qadar." },
+                    { no: 11, elemen: "Akhlak", q: "Ahmad melihat pemandangan gunung yang indah. Ahmad kagum melihat ciptaan Allah. Kalimat tayyibah yang tepat diucapkan Ahmad adalah ....", opts: ["Alhamdulillah", "Allahu Akbar", "Subhanallah"], ans: 2, exp: "Kalimat Subhanallah (Maha Suci Allah) diucapkan saat takjub melihat keindahan atau keagungan ciptaan Allah Swt." },
+                    { no: 12, elemen: "Akhlak", q: "Salah satu cara kita memuliakan Allah yang Maha Suci dalam kehidupan sehari-hari adalah ...", opts: ["Menjaga kebersihan badan dan pakaian saat beribadah", "Membuang sampah di sungai agar rumah bersih", "Berbicara dengan suara yang sangat keras"], ans: 0, exp: "Allah Maha Suci dan menyukai kebersihan, sehingga menjaga kebersihan diri dan pakaian saat ibadah memuliakan-Nya." },
+                    { no: 13, elemen: "Akhlak", q: "Kalimat tasbih <span class='arabic'>سُبْحَانَ اللَّهِ</span> diucapkan untuk mengakui bahwa Allah Swt. adalah ...", opts: ["Allah Maha Besar", "Allah Maha Suci", "Allah Maha Pengasih"], ans: 1, exp: "Subhanallah artinya Maha Suci Allah dari segala sifat kekurangan." },
+                    { no: 14, elemen: "Akhlak", q: "Salah satu karya ungkapan cinta kepada Allah berupa seni menulis ayat-ayat Al-Qur'an dengan indah disebut ...", opts: ["Lukisan", "Kaligrafi", "Poster bebas"], ans: 1, exp: "Kaligrafi adalah seni menulis huruf atau ayat-ayat Al-Qur'an dengan indah sebagai wujud kecintaan kepada Allah." },
+                    { no: 15, elemen: "Akhlak", q: "Situasi yang paling tepat bagi seorang muslim untuk mengucapkan kalimat tasbih adalah ...", opts: ["Saat mendapatkan nikmat berupa hadiah dari orang lain", "Saat memulai suatu pekerjaan yang baik agar berkah", "Saat melihat keajaiban alam atau menyaksikan ketidaksempurnaan makhluk"], ans: 2, exp: "Tasbih diucapkan saat mengagumi keajaiban ciptaan Allah atau menyucikan Allah dari kekurangan makhluk." },
+                    { no: 16, elemen: "Fikih", q: "Jumlah rukun Islam adalah ...", opts: ["4", "5", "6"], ans: 1, exp: "Rukun Islam berjumlah 5: Syahadat, Salat, Zakat, Puasa Ramadan, dan Haji bagi yang mampu." },
+                    { no: 17, elemen: "Fikih", q: "Kalimat 'Asyhadu alla ilaha illallah' merupakan bagian dari syahadat yang disebut ...", opts: ["Syahadat Tauhid", "Syahadat Rasul", "Syahadat Mutlak"], ans: 0, exp: "Syahadat Tauhid adalah persaksian bahwa tiada Tuhan selain Allah Swt." },
+                    { no: 18, elemen: "Fikih", q: "Dalam urutan Rukun Islam, menunaikan zakat menempati urutan yang ke- ...", opts: ["Kedua", "Ketiga", "Keempat"], ans: 1, exp: "Urutan Rukun Islam: (1) Syahadat, (2) Salat, (3) Zakat, (4) Puasa, (5) Haji." },
+                    { no: 19, elemen: "Fikih", q: "<span class='arabic'>أَشْهَدُ أَنَّ مُحَمَّدًا رَسُوْلُ اللهِ</span> (Asyhadu anna Muhammadan Rasulullah). Berdasarkan kutipan kalimat syahadat di atas, arti yang paling tepat adalah ...", opts: ["Aku bersaksi bahwa Nabi Muhammad utusan Allah.", "Aku bersaksi bahwa Tidak ada Tuhan selain Allah.", "Aku bersaksi bahwa Allah itu Maha Esa."], ans: 0, exp: "Kalimat tersebut adalah Syahadat Rasul yang berarti 'Aku bersaksi bahwa Nabi Muhammad adalah utusan Allah'." },
+                    { no: 20, elemen: "Fikih", q: "Fatimah selalu bangun sebelum subuh untuk melaksanakan kewajiban menyembah Allah. Ia melakukan gerakan berdiri, ruku, dan sujud dengan tertib. Aktivitas yang dilakukan Fatimah merupakan pengamalan rukun Islam yang ke- ...", opts: ["Satu", "Dua", "Tiga"], ans: 1, exp: "Gerakan berdiri, rukuk, dan sujud adalah ibadah salat yang merupakan rukun Islam kedua." },
+                    { no: 21, elemen: "Sejarah Peradaban Islam", q: "Bahan dasar yang digunakan Allah Swt. untuk menciptakan Nabi Adam a.s. adalah ...", opts: ["Cahaya", "Api", "Tanah"], ans: 2, exp: "Nabi Adam a.s. sebagai manusia pertama diciptakan Allah Swt. dari tanah." },
+                    { no: 22, elemen: "Sejarah Peradaban Islam", q: "Nama istri Nabi Adam a.s. yang diciptakan dari tulang rusuknya adalah ...", opts: ["Hawa", "Sarah", "Khadijah"], ans: 0, exp: "Allah menciptakan Hawa sebagai pendamping hidup Nabi Adam a.s. di surga." },
+                    { no: 23, elemen: "Sejarah Peradaban Islam", q: "Penyebab Nabi Adam a.s. dan Hawa diturunkan ke bumi adalah ...", opts: ["Ingin mencari suasana baru di luar surga", "Karena bertengkar dengan para malaikat", "Melanggar larangan Allah dengan memakan buah khuldi"], ans: 2, exp: "Karena tipu daya iblis, Nabi Adam dan Hawa memakan buah khuldi yang dilarang Allah sehingga diturunkan ke bumi." },
+                    { no: 24, elemen: "Sejarah Peradaban Islam", q: "Tugas utama Nabi Adam a.s. saat diturunkan ke bumi adalah ...", opts: ["Penjaga surga", "Khalifah atau pemimpin di bumi", "Penguasa seluruh makhluk"], ans: 1, exp: "Allah menciptakan manusia di bumi untuk menjadi khalifah (pemimpin dan pemakmur bumi)." },
+                    { no: 25, elemen: "Sejarah Peradaban Islam", q: "Seorang murid menjatuhkan buku teman tanpa sengaja. Sikap meneladani Nabi Adam a.s. adalah ...", opts: ["Meminta maaf dan membantu membereskan", "Lari pergi", "Menertawakan"], ans: 0, exp: "Nabi Adam a.s. segera mengakui kesalahan dan bertaubat memohon ampun; teladannya adalah berani meminta maaf dan bertanggung jawab." }
+                ]
+            },
+            2: {
+                title: "Soal SAS Kelas 2 SD - PAI & Budi Pekerti",
+                subtitle: "Fase A / Kelas 2 Semester Ganjil • 25 Soal Pilihan Ganda (Opsi A - C)",
+                questions: [
+                    { no: 1, elemen: "Al-Qur'an dan Hadis", q: "Huruf hijaiyah yang tidak dapat disambung dengan huruf sesudahnya adalah ....", opts: ["<span class='arabic'>ب</span> (Ba)", "<span class='arabic'>ا</span> (Alif)", "<span class='arabic'>ج</span> (Jim)"], ans: 1, exp: "Huruf Alif (ا) termasuk 6 huruf yang tidak bisa disambung dengan huruf setelahnya (ا، د، ذ، ر، ز، و)." },
+                    { no: 2, elemen: "Al-Qur'an dan Hadis", q: "Cara membaca lafaz <span class='arabic'>كِتَابٌ</span> yang benar adalah ....", opts: ["Kitaabun", "Katibun", "Kutubun"], ans: 0, exp: "Kaf kasrah (ki), Ta fathah diikuti alif mad (taa), Ba dammatain (bun) dibaca Kitaabun." },
+                    { no: 3, elemen: "Al-Qur'an dan Hadis", q: "Hasil rangkaian yang benar dari huruf-huruf <span class='arabic'>مَ – سْ – جِ – دٌ</span> adalah ....", opts: ["<span class='arabic'>مَسْجِدٌ</span>", "<span class='arabic'>مَسْجِذٌ</span>", "<span class='arabic'>مَسْجَدٌ</span>"], ans: 0, exp: "Keempat huruf dapat disambung dengan benar menjadi مَسْجِدٌ (masjidun) dengan harakat kasrah pada jim dan huruf dal." },
+                    { no: 4, elemen: "Al-Qur'an dan Hadis", q: "Dua surah yang dikenal sebagai surah perlindungan (Al-Mu'awwidzatain) ialah ....", opts: ["Surah An-Nas dan Al-Ikhlas", "Surah An-Nas dan Al-Falaq", "Surah Al-Ikhlas dan Al-Lahab"], ans: 1, exp: "Surah An-Nas dan Surah Al-Falaq disebut Al-Mu'awwidzatain karena berisi permohonan perlindungan kepada Allah." },
+                    { no: 5, elemen: "Al-Qur'an dan Hadis", q: "Arti dari Surah An-Nas adalah ....", opts: ["Manusia", "Waktu subuh", "Pertolongan"], ans: 0, exp: "An-Nas secara bahasa artinya 'Manusia'." },
+                    { no: 6, elemen: "Al-Qur'an dan Hadis", q: "Pihak yang kita mintai pertolongan dan perlindungan menurut ajaran Surah Al-Falaq ialah ....", opts: ["Rasul", "Allah Swt.", "Malaikat"], ans: 1, exp: "Dalam Surah Al-Falaq ayat 1 (Qul a'udzu birabbil-falaq), kita memohon perlindungan hanya kepada Allah Swt." },
+                    { no: 7, elemen: "Akidah dan Asmaulhusna", q: "Arti dari Asmaul Husna secara bahasa adalah ....", opts: ["Nama-nama Allah yang baik dan indah", "Nama-nama Rasul yang baik dan indah", "Nama-nama Malaikat yang baik dan indah"], ans: 0, exp: "Asmaul Husna berasal dari kata 'Asma' (nama-nama) dan 'Husna' (baik/indah), yaitu nama-nama Allah yang baik dan indah." },
+                    { no: 8, elemen: "Akidah dan Asmaulhusna", q: "Arti dari Asmaul Husna Ar-Rahman adalah ....", opts: ["Maha Mengetahui", "Maha Pengasih", "Maha Mendengar"], ans: 1, exp: "Ar-Rahman artinya Allah Maha Pengasih kepada seluruh makhluk-Nya di dunia." },
+                    { no: 9, elemen: "Akidah dan Asmaulhusna", q: "Arti dari nama baik Allah Ar-Rahim adalah ....", opts: ["Maha Penyayang", "Maha Pencipta", "Maha Pemberi rezeki"], ans: 0, exp: "Ar-Rahim artinya Allah Maha Penyayang, khususnya kepada hamba-hamba-Nya yang beriman di akhirat." },
+                    { no: 10, elemen: "Akidah dan Asmaulhusna", q: "Sikap yang tepat ketika kita mengingat kasih sayang Allah yang telah memberikan rezeki kepada manusia, hewan, dan tumbuhan adalah ....", opts: ["Mengabaikan kelestarian hewan dan tumbuhan", "Merasa sombong karena menganggap rezeki diperoleh atas hasil usaha sendiri", "Senantiasa bersyukur dan merawat makhluk hidup"], ans: 2, exp: "Meneladani kasih sayang Allah dilakukan dengan bersyukur serta menjaga kelestarian hewan dan tumbuhan." },
+                    { no: 11, elemen: "Akidah dan Asmaulhusna", q: "Perilaku kasih sayang yang sesuai ketika melihat teman sedang sakit adalah ....", opts: ["Mengejeknya", "Menjenguk dan mendoakannya", "Membiarkannya sendirian tanpa peduli"], ans: 1, exp: "Menjenguk dan mendoakan teman yang sakit merupakan bentuk kasih sayang sesama muslim." },
+                    { no: 12, elemen: "Akhlak", q: "Sesuatu yang sebaiknya kita gunakan untuk mencuci tangan sebelum makan adalah ....", opts: ["Sabun dan air bersih", "Kain atau tisu basah", "Air yang kotor"], ans: 0, exp: "Mencuci tangan menggunakan sabun dan air bersih yang mengalir efektif menghilangkan kuman penyakit." },
+                    { no: 13, elemen: "Akhlak", q: "Tindakan yang benar untuk memperlakukan sampah di ruang kelas adalah ....", opts: ["Dibuang di selokan", "Dibuang di halaman", "Dibuang ke tempat sampah"], ans: 2, exp: "Membuang sampah pada tempatnya menjaga kebersihan kelas dan mencegah penyumbatan saluran air." },
+                    { no: 14, elemen: "Akhlak", q: "Salah satu cara yang tepat untuk menjaga kesehatan gigi adalah ....", opts: ["Tidak pernah menggosok gigi", "Menggosok gigi secara teratur", "Makan permen sebanyak-banyaknya"], ans: 1, exp: "Menggosok gigi secara teratur (pagi setelah sarapan dan malam sebelum tidur) mencegah gigi berlubang." },
+                    { no: 15, elemen: "Akhlak", q: "Ciri-ciri makanan yang baik untuk kesehatan tubuh adalah ....", opts: ["Bersih, segar, dan mengandung gizi seimbang", "Makanan yang dibeli di pinggir jalan tanpa ditutup", "Makanan yang sudah kedaluwarsa atau basi"], ans: 0, exp: "Makanan yang halalan thayyiban adalah makanan yang halal, bersih, segar, dan bergizi seimbang." },
+                    { no: 16, elemen: "Akhlak", q: "Sikap yang baik saat melihat dua teman sedang bertengkar di kelas adalah ....", opts: ["Ikut bertengkar", "Menertawakan mereka", "Membantu mendamaikan dengan cara yang baik"], ans: 2, exp: "Sesama muslim adalah bersaudara; jika ada yang berselisih wajib kita damaikan (ishlah)." },
+                    { no: 17, elemen: "Fikih", q: "Hukum melaksanakan salat fardu bagi umat Islam adalah ....", opts: ["Wajib", "Sunah", "Makruh"], ans: 0, exp: "Salat fardu 5 waktu hukumnya wajib 'ain bagi setiap muslim yang balig dan berakal." },
+                    { no: 18, elemen: "Fikih", q: "Jumlah waktu salat fardu yang wajib dilaksanakan umat Islam dalam sehari semalam adalah ....", opts: ["Tiga", "Lima", "Tujuh"], ans: 1, exp: "Salat fardu ada 5 waktu dalam sehari semalam: Subuh, Zuhur, Asar, Magrib, dan Isya." },
+                    { no: 19, elemen: "Fikih", q: "Salat fardu yang dikerjakan ketika fajar sebelum matahari terbit adalah salat ....", opts: ["Magrib", "Isya", "Subuh"], ans: 2, exp: "Salat Subuh dilaksanakan sejak terbit fajar sadiq hingga menjelang matahari terbit." },
+                    { no: 20, elemen: "Fikih", q: "Waktu pelaksanaan salat Magrib adalah setelah matahari ....", opts: ["Terbit", "Terbenam", "Berada tepat di atas kepala"], ans: 1, exp: "Waktu salat Magrib masuk tepat ketika matahari terbenam di ufuk barat hingga hilangnya mega merah." },
+                    { no: 21, elemen: "Fikih", q: "Gerakan salat yang di dalamnya membaca bacaan <span class='arabic'>سُبْحَانَ رَبِّيَ الْعَظِيمِ</span> adalah ....", opts: ["Rukuk", "Sujud", "Salam"], ans: 0, exp: "Bacaan 'Subhaana rabbiyal 'adzimi' (Maha Suci Tuhanku Yang Maha Agung) dibaca ketika rukuk." },
+                    { no: 22, elemen: "Sejarah Peradaban Islam", q: "Pihak yang disembah oleh kaum Nabi Nuh a.s. atas ajakan beliau adalah ....", opts: ["Berhala", "Allah Swt.", "Manusia"], ans: 1, exp: "Nabi Nuh a.s. berdakwah mengajak kaumnya meninggalkan berhala dan hanya menyembah Allah Swt." },
+                    { no: 23, elemen: "Sejarah Peradaban Islam", q: "Karakter atau sifat terpuji yang dikenal dari diri Nabi Nuh a.s. ketika berdakwah kepada kaumnya adalah ....", opts: ["Sabar", "Sombong", "Pemarah"], ans: 0, exp: "Nabi Nuh a.s. berdakwah selama ratusan tahun dengan penuh kesabaran dan ketabahan meski dicemooh kaumnya." },
+                    { no: 24, elemen: "Sejarah Peradaban Islam", q: "Sesuatu yang diperintahkan Allah Swt. untuk dibuat oleh Nabi Nuh a.s. adalah ....", opts: ["Masjid", "Patung", "Kapal"], ans: 2, exp: "Allah memerintahkan Nabi Nuh a.s. membuat kapal besar untuk menyelamatkan orang beriman dari banjir bah." },
+                    { no: 25, elemen: "Sejarah Peradaban Islam", q: "Cara yang tepat bagi kita sebagai pelajar untuk meneladani kesabaran Nabi Nuh a.s. adalah ....", opts: ["Mudah menyerah ketika belajar", "Belajar dengan tekun dan tidak mudah putus asa", "Berhenti belajar ketika menemui kesulitan"], ans: 1, exp: "Meneladani kesabaran Nabi Nuh a.s. di sekolah diwujudkan dengan belajar tekun dan pantang menyerah." }
+                ]
+            },
+            3: {
+                title: "Soal SAS Kelas 3 SD - PAI & Budi Pekerti",
+                subtitle: "Fase B / Kelas 3 Semester 1 • 30 Soal Pilihan Ganda (Opsi A - C)",
+                questions: [
+                    { no: 1, elemen: "Al-Qur'an dan Hadis", q: "Dalam kelompok, dua murid berbeda pendapat tentang huruf hijaiah bersambung tiga kata atau lebih. Cara menyelesaikan yang paling baik adalah...", opts: ["Memaksa pendapat sendiri", "Berdiskusi santun dan mencari alasan yang benar", "Menyalahkan teman"], ans: 1, exp: "Perbedaan pendapat dalam belajar diselesaikan dengan musyawarah/diskusi santun berdasar ilmu yang benar." },
+                    { no: 2, elemen: "Al-Qur'an dan Hadis", q: "Murid merasa kesulitan memahami huruf hijaiah bersambung tiga kata atau lebih. Sikap paling tepat adalah...", opts: ["Berhenti belajar", "Bertanya dengan sopan", "Menyembunyikan buku"], ans: 1, exp: "Ketika mengalami kesulitan memahami pelajaran, sikap yang terpuji adalah bertanya dengan sopan kepada guru atau teman." },
+                    { no: 3, elemen: "Al-Qur'an dan Hadis", q: "Rani membaca QS. al-Kauśar terburu-buru sehingga bacaan panjang tidak terdengar. Tindakan terbaik adalah...", opts: ["Membaca lebih cepat agar selesai", "Menunggu teman membaca dahulu", "Mengulang dengan tartil dan memperhatikan Mad Tabi’i"], ans: 2, exp: "Al-Qur'an harus dibaca dengan tartil (perlahan dan sesuai tajwid), termasuk memanjangkan bacaan Mad Tabi'i 2 harakat." },
+                    { no: 4, elemen: "Al-Qur'an dan Hadis", q: "Dodi ingin bersyukur setelah mendapat hadiah. Sikap yang paling sesuai pesan QS. al-Kauśar adalah...", opts: ["Membanggakan hadiah kepada teman", "Melupakan orang yang membantu", "Berterima kasih dan berbagi kebaikan"], ans: 2, exp: "QS. al-Kautsar mengajarkan kita mensyukuri nikmat Allah dengan beribadah dan berbagi kebaikan (berkurban/bersedekah)." },
+                    { no: 5, elemen: "Al-Qur'an dan Hadis", q: "Makna belajar QS. al-Kauśar dan Mad Ṭabi‘i menjadi lebih kuat apabila murid...", opts: ["Menghubungkan materi dengan tindakan baik", "Menulis tanpa membaca", "Mendengar tanpa bertanya"], ans: 0, exp: "Ilmu Al-Qur'an akan bermakna dan berkah apabila dipahami dan diamalkan dalam tindakan baik sehari-hari." },
+                    { no: 6, elemen: "Al-Qur'an dan Hadis", q: "Pilihan berikut yang menunjukkan disiplin positif ketika latihan QS. al-Kauśar dan Mad Ṭabi‘i adalah...", opts: ["Saling mengingatkan", "Memberi ejekan", "Meninggalkan kelompok"], ans: 0, exp: "Saling mengingatkan dalam kebaikan dan kesabaran adalah bentuk disiplin positif saat belajar bersama." },
+                    { no: 7, elemen: "Al-Qur'an dan Hadis", q: "Dalam budaya sekolah aman dan nyaman, murid mempelajari QS. al-Kauśar dan Mad Ṭabi‘i dengan cara yaitu….", opts: ["Menolak pendapat teman", "Membuat suasana gaduh", "Saling menghargai dan menjaga ketertiban"], ans: 2, exp: "Suasana belajar yang aman dan nyaman terwujud jika setiap murid saling menghargai dan menjaga ketertiban." },
+                    { no: 8, elemen: "Akidah", q: "Sifat wajib Allah adalah sifat yang pasti ada pada Allah Swt. Salah satu contohnya adalah Wujud yang berarti ....", opts: ["Allah Maha Kekal", "Allah itu ada", "Allah Maha Berkuasa"], ans: 1, exp: "Wujud adalah sifat wajib pertama bagi Allah yang artinya Ada (keberadaan Allah dibuktikan dengan adanya alam semesta)." },
+                    { no: 9, elemen: "Akidah", q: "Allah Swt. tidak mungkin bersifat Adam yang berarti tidak ada. Hal ini menunjukkan bahwa Allah memiliki sifat wajib ....", opts: ["Wujud", "Qidam", "Baqa"], ans: 0, exp: "Sifat mustahil 'Adam (tiada) adalah lawan dari sifat wajib Wujud (ada)." },
+                    { no: 10, elemen: "Akidah", q: "Allah Swt. berbeda dengan makhluk-Nya. Allah tidak membutuhkan bantuan siapa pun. Sifat wajib Allah yang sesuai dengan pernyataan tersebut adalah ....", opts: ["Qudrat", "Iradat", "Qiyamuhu binafsihi"], ans: 2, exp: "Qiyamuhu binafsihi artinya Allah berdiri sendiri dan tidak bergantung kepada makhluk mana pun." },
+                    { no: 11, elemen: "Akidah", q: "Sifat mustahil Allah adalah sifat yang tidak mungkin dimiliki Allah. Lawan dari sifat wajib Qidam adalah ....", opts: ["Hudus", "Fana", "Jahlun"], ans: 0, exp: "Qidam (Terdahulu/tanpa permulaan) berlawanan dengan sifat mustahil Hudus (baru/ada permulaan)." },
+                    { no: 12, elemen: "Akidah", q: "Allah memiliki sifat jaiz, artinya Allah ....", opts: ["wajib menciptakan semua yang diinginkan manusia", "bebas melakukan atau tidak melakukan sesuatu yang mungkin menurut kehendak-Nya", "membutuhkan bantuan makhluk untuk menciptakan alam"], ans: 1, exp: "Sifat Jaiz Allah (Fi'lu kulli mumkinin au tarkuhu) berarti Allah bebas berbuat atau tidak berbuat sesuatu sesuai kehendak-Nya." },
+                    { no: 13, elemen: "Akidah", q: "Alam semesta diciptakan oleh Allah Swt. sesuai dengan kehendak-Nya. Pernyataan ini mengajarkan kita bahwa Allah memiliki sifat ....", opts: ["jaiz", "mustahil", "kekurangan"], ans: 0, exp: "Menciptakan atau tidak menciptakan alam semesta merupakan hak dan kehendak bebas Allah (sifat Jaiz)." },
+                    { no: 14, elemen: "Akidah", q: "Allah Swt. memberikan banyak karunia kepada manusia tanpa mengharapkan balasan. Pernyataan tersebut menunjukkan bahwa Allah memiliki nama ....", opts: ["Al-Kabir", "Al-Wahhab", "Al-'Alim"], ans: 1, exp: "Al-Wahhab artinya Allah Maha Pemberi Karunia kepada seluruh makhluk-Nya tanpa mengharap imbalan." },
+                    { no: 15, elemen: "Akhlak", q: "Fatimah telah belajar dengan sungguh-sungguh untuk mengikuti kompetisi sains tingkat nasional. Namun, pada hari pengumuman, namanya tidak tercantum dalam daftar pemenang. Meskipun sedih, Fatimah tidak larut dalam kekecewaan. Tindakan Fatimah yang paling tepat dalam mencerminkan sikap husnuzan kepada Allah Swt. adalah...", opts: ["Menyalahkan panitia lomba karena dianggap tidak adil dalam menilai.", "Berhenti belajar sains karena merasa usahanya selama ini sia-sia.", "Meyakini bahwa Allah menyiapkan waktu yang lebih tepat untuk keberhasilannya."], ans: 2, exp: "Husnuzan (berbaik sangka) kepada Allah berarti meyakini setiap ketetapan Allah pasti mengandung hikmah dan rencana terbaik." },
+                    { no: 16, elemen: "Akhlak", q: "Seringkali manusia merasa sedih ketika doa-doanya belum dikabulkan, padahal ia telah beribadah dengan giat. Ia merasa Allah Swt. tidak mengabulkan permintaannya. Evaluasilah mengapa perspektif husnuzan tetap dianggap sebagai sikap yang paling rasional dan religius bagi seorang mukmin dalam kondisi tersebut….", opts: ["Karena keterbatasan ilmu manusia membuat mereka tidak menyadari bahwa apa yang diinginkan mungkin berdampak buruk, sementara Allah Swt. Maha Mengetahui yang terbaik.", "Karena dengan berprasangka baik, Allah Swt. dipaksa untuk segera mewujudkan keinginan hamba-Nya tersebut.", "Karena doa hanyalah ritual rutin yang tidak berkaitan dengan hasil yang akan diterima oleh manusia."], ans: 0, exp: "Ilmu manusia terbatas sedangkan ilmu Allah Maha Luas; Allah mengabulkan doa sesuai kebutuhan terbaik hamba-Nya." },
+                    { no: 17, elemen: "Akhlak", q: "Dua orang pedagang mengalami kerugian akibat bencana banjir. Pedagang A merasa Allah tidak adil, sedangkan Pedagang B mengevaluasi usahanya dan yakin Allah akan memberi ganti yang lebih baik. Analisis yang tepat mengenai perbedaan sikap antara Pedagang A dan Pedagang B adalah...", opts: ["Pedagang A menunjukkan sikap tawakal, sedangkan Pedagang B menunjukkan sikap putus asa.", "Pedagang A melakukan husnuzan, sedangkan Pedagang B melakukan suuzan kepada takdir.", "Pedagang A terjebak dalam suuzan yang menutup pintu rahmat, sedangkan Pedagang B mempraktikkan husnuzan yang memotivasi bangkit kembali."], ans: 2, exp: "Suuzan (buruk sangka) membuat seseorang putus asa, sedangkan husnuzan menumbuhkan optimisme untuk bangkit." },
+                    { no: 18, elemen: "Akhlak", q: "Banyak orang yang mengalami stres dan kecemasan berlebih saat menghadapi kesulitan ekonomi. Namun, mereka yang memiliki sikap husnuzan cenderung lebih tenang dan stabil secara emosional. Mengapa sikap husnuzan kepada Allah Swt. dapat memberikan ketenangan jiwa bagi seseorang……..", opts: ["Karena dengan husnuzan, seseorang merasa pasti akan menjadi kaya raya secara instan.", "Karena husnuzan menumbuhkan rasa percaya diri bahwa Allah Swt. adalah penjamin rezeki dan tidak akan membebani hamba di luar batas kemampuannya.", "Karena husnuzan dapat menghilangkan seluruh masalah hidup secara ajaib tanpa sisa."], ans: 1, exp: "Keyakinan bahwa Allah menjamin rezeki dan tidak membebani di luar batas kemampuan menjadikan hati tenang." },
+                    { no: 19, elemen: "Akhlak", q: "Seorang petani mengalami gagal panen akibat serangan hama yang tidak terduga, padahal ia sudah mengeluarkan modal besar. Sebagian orang menyarankannya untuk berhenti bertani, namun ia memilih untuk bersabar dan mencoba kembali dengan cara baru. Analisislah mengapa sikap petani tersebut termasuk bentuk husnuzan kepada Allah Swt………..", opts: ["Karena ia merasa memiliki modal yang masih cukup banyak.", "Karena ia yakin bahwa serangan hama adalah kesalahan teknis semata.", "Karena ia percaya Allah akan memberi ganti yang lebih baik jika ia terus berusaha dan bersabar."], ans: 2, exp: "Tetap sabar dan berikhtiar kembali setelah gagal adalah bukti keyakinan bahwa Allah akan memberi hasil yang lebih baik." },
+                    { no: 20, elemen: "Akhlak", q: "Zaman sekarang penuh dengan tantangan ekonomi dan ketidakpastian masa depan yang seringkali membuat remaja muslim merasa cemas dan ragu akan masa depannya. Susunlah sebuah langkah strategis yang paling tepat untuk menjaga hati agar tetap husnuzan kepada Allah di tengah situasi sulit tersebut………", opts: ["Membatasi pergaulan hanya dengan orang kaya agar termotivasi secara finansial.", "Rutin mengkaji asmaul husna seperti Ar-Razzaq dan Al-Latif untuk memperkuat keyakinan hati.", "Menghindari berita-berita dunia agar hati tenang dan tidak terbebani pikiran berat."], ans: 1, exp: "Memahami dan meresapi sifat Allah Ar-Razzaq (Maha Pemberi Rezeki) dan Al-Latif (Maha Lembut) memperkuat husnuzan." },
+                    { no: 21, elemen: "Fikih", q: "Panggilan atau penanda bahwa waktu salat fardhu telah tiba disebut ....", opts: ["Ikamah", "Azan", "Takbir"], ans: 1, exp: "Azan adalah seruan/panggilan tanda masuknya waktu salat fardu dan ajakan menunaikannya." },
+                    { no: 22, elemen: "Fikih", q: "Orang yang mengumandangkan azan disebut ....", opts: ["Muazin", "Imam", "Makmum"], ans: 0, exp: "Orang yang bertugas mengumandangkan azan disebut Muazin." },
+                    { no: 23, elemen: "Fikih", q: "Seruan atau pertanda bahwa salat berjamaah akan segera dimulai disebut ....", opts: ["Azan", "Ikamah", "Khotbah"], ans: 1, exp: "Ikamah dikumandangkan sesaat sebelum salat berjamaah dimulai agar makmum segera meluruskan saf." },
+                    { no: 24, elemen: "Fikih", q: "Pada azan Subuh terdapat lafal tambahan yang berbunyi \"As-salatu khairum minan-naum\", yang artinya ....", opts: ["Mari menuju kemenangan", "Salat itu lebih baik daripada tidur", "Allah Maha Besar"], ans: 1, exp: "Lafal tatswib pada azan Subuh 'As-shalatu khairum minan-naum' berarti 'Salat itu lebih baik daripada tidur'." },
+                    { no: 25, elemen: "Fikih", q: "Ketika mendengar suara azan mengumandang, sikap yang sebaiknya kita lakukan adalah ....", opts: ["Diam dan mendengarkan serta menjawab azan", "Berbicara dengan suara keras", "Bermain-main dengan teman"], ans: 0, exp: "Adab mendengar azan adalah menghentikan aktivitas, mendengarkan dengan khidmat, dan menjawab lafal azan." },
+                    { no: 26, elemen: "Sejarah Peradaban Islam", q: "Nabi Muhammad saw. berasal dari keluarga Bani Hasyim yang merupakan bagian dari suku ....", opts: ["Aus", "Quraisy", "Khazraj"], ans: 1, exp: "Nabi Muhammad saw. lahir dari klan Bani Hasyim yang merupakan kabilah terhormat dari suku Quraisy di Makkah." },
+                    { no: 27, elemen: "Sejarah Peradaban Islam", q: "Ayah Nabi Muhammad saw. meninggal dunia sebelum beliau lahir. Peristiwa ini mengajarkan bahwa Nabi Muhammad saw. sejak lahir harus menjalani kehidupan ....", opts: ["tanpa kasih sayang dari siapa pun", "dengan selalu bergantung kepada orang lain", "dengan keadaan yatim dan mendapat pengasuhan keluarga"], ans: 2, exp: "Ayah beliau (Abdullah) wafat saat Nabi masih dalam kandungan, sehingga beliau lahir dalam keadaan yatim." },
+                    { no: 28, elemen: "Sejarah Peradaban Islam", q: "Nabi Muhammad saw. lahir pada Tahun Gajah. Tahun tersebut dinamakan demikian karena ....", opts: ["banyak gajah dipelihara penduduk Makkah", "pasukan bergajah datang untuk menyerang Ka'bah", "penduduk Makkah menggunakan gajah untuk berdagang"], ans: 1, exp: "Dinamakan Tahun Gajah karena pada tahun itu pasukan bergajah pimpinan Raja Abrahah dari Yaman menyerang Ka'bah." },
+                    { no: 29, elemen: "Sejarah Peradaban Islam", q: "Setelah ibunya, Aminah, meninggal dunia, Nabi Muhammad saw. diasuh oleh Abdul Muthalib. Setelah Abdul Muthalib meninggal, beliau diasuh oleh ....", opts: ["Abu Thalib", "Abu Lahab", "Abdullah bin Mas'ud"], ans: 0, exp: "Sepeninggal kakeknya (Abdul Muthalib), Nabi Muhammad saw. diasuh oleh pamannya yang sangat menyayanginya, yaitu Abu Thalib." },
+                    { no: 30, elemen: "Sejarah Peradaban Islam", q: "Ketika masih kanak-kanak, Nabi Muhammad saw. pernah menggembala kambing. Sikap positif yang dapat dipelajari dari pengalaman tersebut adalah ....", opts: ["menghindari tanggung jawab yang berat", "membiasakan diri hidup mewah", "belajar mandiri dan bertanggung jawab"], ans: 2, exp: "Menggembala kambing melatih kesabaran, kemandirian, dan rasa tanggung jawab sejak usia dini." }
+                ]
+            },
+            4: {
+                title: "Soal SAS Kelas 4 SD - PAI & Budi Pekerti",
+                subtitle: "Fase B / Kelas 4 Semester 1 • 45 Soal Pilihan Ganda (Opsi A - D)",
+                questions: [
+                    { no: 1, elemen: "Al-Qur'an dan Hadis", q: "Perhatikan kata berikut! <span class='arabic'>كَتَبَ</span> Kataba (telah menulis). Rafi mengamati bahwa huruf-huruf pada kata tersebut saling terhubung. Kesimpulan yang paling tepat adalah ....", opts: ["Semua huruf hijaiyah selalu dapat disambungkan dengan huruf sesudahnya.", "Huruf pada kata tersebut membentuk satu kata melalui sambungan sesuai kaidah penulisan Arab.", "Kata tersebut harus dibaca dari kiri ke kanan.", "Setiap huruf harus dibaca secara terpisah tanpa memperhatikan harakat."], ans: 1, exp: "Huruf Kaf, Ta, dan Ba dapat disambung sesuai kaidah penulisan huruf hijaiyah untuk membentuk satu kata utuh." },
+                    { no: 2, elemen: "Al-Qur'an dan Hadis", q: "Perhatikan huruf berikut: <span class='arabic'>ب ت ث</span>. Ketiganya memiliki bentuk dasar yang hampir sama. Hal yang membedakan ketiga huruf tersebut adalah ....", opts: ["Jumlah dan letak titiknya.", "Panjang pendek bacaannya saja.", "Posisi huruf terhadap arah membaca.", "Jumlah kata dalam sebuah kalimat."], ans: 0, exp: "Ba bertitik 1 di bawah, Ta bertitik 2 di atas, dan Tsa bertitik 3 di atas." },
+                    { no: 3, elemen: "Al-Qur'an dan Hadis", q: "Perhatikan kalimat berikut! <span class='arabic'>هَذَا كِتَابٌ جَدِيدٌ</span>. Agar tidak keliru saat membaca, urutan yang harus dilakukan adalah ....", opts: ["Membaca kata paling kiri terlebih dahulu, lalu ke kanan.", "Membaca dari kanan ke kiri sesuai urutan kata dan memperhatikan harakatnya.", "Membaca semua huruf tanpa harakat.", "Menggabungkan semua kata tanpa jeda."], ans: 1, exp: "Tulisan Arab ditulis dan dibaca dari kanan ke kiri dengan memperhatikan harakat setiap huruf." },
+                    { no: 4, elemen: "Al-Qur'an dan Hadis", q: "Siti menulis huruf jim di tengah kata dengan bentuk <span class='arabic'>جـ</span>. Setelah diperiksa, guru menyatakan bahwa bentuk tersebut kurang tepat untuk posisi tengah. Bentuk yang seharusnya digunakan adalah ....", opts: ["<span class='arabic'>ج</span> (tunggal)", "<span class='arabic'>ـجـ</span> (sambung kanan dan kiri)", "<span class='arabic'>ـج</span> (sambung kanan saja)", "<span class='arabic'>جـ</span> (sambung kiri saja)"], ans: 1, exp: "Huruf Jim di tengah kata dapat menyambung dengan huruf sebelum dan sesudahnya sehingga berbentuk ـجـ." },
+                    { no: 5, elemen: "Al-Qur'an dan Hadis", q: "Perhatikan bentuk huruf mim berikut: <span class='arabic'>م ، مـ ، ـمـ ، ـم</span>. Jika huruf mim berada di akhir kata dan tersambung dengan huruf sebelumnya, bentuk yang tepat adalah ....", opts: ["<span class='arabic'>م</span> (tunggal)", "<span class='arabic'>ـم</span> (akhir tersambung)", "<span class='arabic'>ـمـ</span> (tengah)", "<span class='arabic'>مـ</span> (awal)"], ans: 1, exp: "Bentuk huruf Mim di akhir kata yang tersambung dengan huruf sebelumnya adalah ـم." },
+                    { no: 6, elemen: "Al-Qur'an dan Hadis", q: "Kelompok huruf yang seluruh anggotanya tidak menyambung ke huruf sesudahnya dalam arah penulisan Arab adalah ....", opts: ["<span class='arabic'>ب ت ث ن</span>", "<span class='arabic'>ج، ح، خ، ع</span>", "<span class='arabic'>س ش ص ض</span>", "<span class='arabic'>ا، د، ذ، ر، ز، و</span>"], ans: 3, exp: "Keenam huruf hijaiyah (Alif, Dal, Dzal, Ra, Zai, Wau) hanya bisa disambung dari kanan dan tidak bisa menyambung ke kiri." },
+                    { no: 7, elemen: "Al-Qur'an dan Hadis", q: "Kelompok belajar Al-Qur'an membuat daftar huruf yang menyebabkan idgham bighunnah. Salah satu siswa memasukkan huruf lam dan ra ke dalam daftar tersebut. Kelompok huruf idgham bighunnah yang benar adalah ....", opts: ["<span class='arabic'>ي، ن، م، و</span>", "<span class='arabic'>ل، ر</span>", "<span class='arabic'>ء، هـ، ع، ح</span>", "<span class='arabic'>ت، ث، ج، د</span>"], ans: 0, exp: "Huruf Idgham Bighunnah (melebur dengan dengung) ada 4 yang disingkat Yanmu: Ya, Nun, Mim, Wau." },
+                    { no: 8, elemen: "Al-Qur'an dan Hadis", q: "Nisa membaca potongan ayat yang memiliki tanwin bertemu huruf lam. Ia harus menentukan hukum bacaannya. Hukum bacaan yang tepat adalah ....", opts: ["Ikhfa haqiqi, karena tanwin dibaca samar.", "Idgham bighunnah, karena semua huruf idgham dibaca dengung.", "Izhar halqi, karena lam termasuk huruf tenggorokan.", "Idgham bilaghunnah, karena tanwin bertemu huruf lam dan dibaca melebur tanpa dengung."], ans: 3, exp: "Nun sukun atau tanwin bertemu huruf Lam (ل) atau Ra (ر) dibaca Idgham Bilaghunnah (lebur tanpa dengung)." },
+                    { no: 9, elemen: "Al-Qur'an dan Hadis", q: "Ketika menghafal Surah An-Nasr, Fatimah membaca ayat pertama, kemudian langsung melompat ke ayat ketiga. Agar hafalannya sesuai dengan urutan surah, bagian yang harus dibaca setelah ayat pertama adalah ....", opts: ["<span class='arabic'>فَسَبِّحْ بِحَمْدِ رَبِّكَ...</span>", "<span class='arabic'>وَرَأَيْتَ النَّاسَ...</span>", "<span class='arabic'>إِنَّهُ كَانَ تَوَّابًا...</span>", "<span class='arabic'>إِذَا جَاءَ نَصْرُ اللَّهِ...</span>"], ans: 1, exp: "Ayat ke-2 Surah An-Nasr adalah 'Wa ra'aitan-naasa yadkhuluuna fii diinillaahi afwaajaa'." },
+                    { no: 10, elemen: "Al-Qur'an dan Hadis", q: "Perhatikan potongan ayat berikut: <span class='arabic'>إِنَّهُ كَانَ تَوَّابًا</span>. Pada kata <span class='arabic'>إِنَّهُ</span> terdapat huruf nun bertasydid. Bagaimana cara membaca huruf tersebut dengan benar?", opts: ["Membaca nun dengan jelas tanpa dengung.", "Menghilangkan tasydid agar lebih mudah diucapkan.", "Membaca nun bertasydid dengan ghunnah atau dengung sekitar dua harakat.", "Membaca nun dengan panjang enam harakat."], ans: 2, exp: "Hukum bacaan Ghunnah Musyaddadah terjadi apabila ada huruf Nun bertasydid (نّ) atau Mim bertasydid (مّ) yang wajib dibaca dengung 2 harakat." },
+                    { no: 11, elemen: "Akidah", q: "Perhatikan cerita berikut! Ahmad tidak sengaja menjatuhkan tempat pensil milik Hasan hingga rusak. Ahmad segera meminta maaf dan berjanji lebih berhati-hati. Hasan memaafkan Ahmad dengan ikhlas. Allah Swt. memiliki nama Al-Ghaffar. Makna Al-Ghaffar adalah ....", opts: ["Maha Pemberi Karunia", "Maha Pengampun", "Maha Pembuka", "Maha Lembut"], ans: 1, exp: "Al-Ghaffar artinya Allah Maha Pengampun segala dosa hamba-hamba-Nya yang bertaubat." },
+                    { no: 12, elemen: "Akidah", q: "Bacalah cerita berikut! Saat ulang tahun, Siti mendapatkan banyak alat tulis dari orang tuanya. Ia kemudian memberikan sebagian alat tulis tersebut kepada temannya yang membutuhkan. Perilaku Siti mencerminkan keteladanan terhadap Asmaulhusna yaitu ....", opts: ["Al Gaffar", "Al Fattah", "Al Wahhab", "Al Latif"], ans: 2, exp: "Al-Wahhab artinya Maha Pemberi Karunia; diteladani dengan suka berbagi dan memberi kepada sesama." },
+                    { no: 13, elemen: "Akidah", q: "Arti dari asmaul husna Al Latif adalah ....", opts: ["Maha Pengampun", "Maha Pembuka Rahmat", "Maha Lembut", "Maha Pemberi Karunia"], ans: 2, exp: "Al-Latif artinya Allah Maha Lembut dan Maha Halus dalam mengurus serta menyayangi hamba-Nya." },
+                    { no: 14, elemen: "Akidah", q: "Perhatikan cerita berikut! Rizki mengalami kesulitan mengerjakan soal matematika. Ia berdoa kepada Allah Swt., kemudian belajar dengan tekun dan meminta bantuan gurunya. Akhirnya, Rizki memahami cara menyelesaikan soal tersebut. Asmaulhusna Al-Fattah memiliki arti yakni ....", opts: ["Maha Pembuka", "Maha Pengampun", "Maha Pemberi Karunia", "Maha Lembut"], ans: 0, exp: "Al-Fattah artinya Allah Maha Pembuka pintu rahmat, ilmu, dan jalan keluar dari kesulitan." },
+                    { no: 15, elemen: "Akidah", q: "Al-Wahhab artinya Allah Maha Pemberi. Contoh perilaku yang meneladani sifat Al-Wahhab dalam kehidupan sehari-hari adalah ...", opts: ["Meminjam barang teman tanpa izin", "Memberikan bantuan kepada orang yang membutuhkan", "Mengambil barang milik orang lain", "Menolak membantu teman yang kesulitan"], ans: 1, exp: "Meneladani Al-Wahhab dilakukan dengan ikhlas memberi bantuan atau sedekah kepada orang yang membutuhkan." },
+                    { no: 16, elemen: "Akidah", q: "Bacalah cerita berikut! Ketika melihat temannya sedih karena kehilangan penghapus, Nisa mendekatinya dengan ramah. Ia membantu mencari penghapus tersebut tanpa mengejek atau menyakiti perasaan temannya. Perilaku Nisa sesuai dengan keteladanan Asmaulhusna ....", opts: ["Al Gaffar", "Al Wahhab", "Al Fattah", "Al Latif"], ans: 3, exp: "Bersikap ramah, bertutur lembut, dan menjaga perasaan teman adalah pengamalan dari Asmaulhusna Al-Latif." },
+                    { no: 17, elemen: "Akidah", q: "Perilaku berikut ini yang merupakan tindakan yang mencerminkan asmaul husna Al Latif adalah ....", opts: ["menjawab pertanyaan guru dengan santun dan lembut", "memaksa teman untuk mengikuti pendapat kita", "marah-marah ketika keinginan tidak dipenuhi orang tua", "mendorong kita untuk bersikap kasar kepada teman"], ans: 0, exp: "Berbicara santun dan lemah lembut kepada guru maupun orang tua mencerminkan sifat Al-Latif." },
+                    { no: 18, elemen: "Akidah", q: "Kebiasaan menyisihkan uang saku untuk dimasukkan ke dalam kotak amal masjid merupakan wujud pengamalan asmaul husna yakni ....", opts: ["Al Gaffar", "Al Wahhab", "Al Latif", "Al Fattah"], ans: 1, exp: "Bersedekah menyisihkan uang saku meneladani sifat Allah Al-Wahhab (Maha Pemberi)." },
+                    { no: 19, elemen: "Akidah", q: "Murid yang meneladani asmaul husna Al Fattah jika mengalami kegagalan saat ujian adalah akan ....", opts: ["menangis dan berhenti belajar", "menyalahkan soal yang sulit", "evaluasi diri dan makin giat belajar", "putus asa dan tidak mau sekolah"], ans: 2, exp: "Meyakini Allah Al-Fattah (Maha Pembuka jalan) membuat murid tetap optimis, mengevaluasi diri, dan giat belajar." },
+                    { no: 20, elemen: "Akidah", q: "Saat bermain bersama teman, Ahmad tidak sengaja merusak pensil milik temannya. Sikap terpuji yang sebaiknya dilakukan Ahmad adalah ....", opts: ["Berpura-pura tidak tahu", "Menyalahkan teman lain", "Mengakui kesalahan dan meminta maaf", "Membiarkan pensil yang rusak"], ans: 2, exp: "Mengakui kesalahan dan meminta maaf dengan tulus adalah cerminan meneladani Al-Ghaffar." },
+                    { no: 21, elemen: "Akhlak", q: "Istilah dalam ajaran Islam yang berarti berbakti kepada kedua orang tua adalah ....", opts: ["Jihad fi Sabilillah", "Birrul walidain", "Ukhuwah Islamiah", "Silaturahmi"], ans: 1, exp: "Birrul walidain adalah istilah syariat Islam untuk kewajiban berbakti dan berbuat baik kepada kedua orang tua." },
+                    { no: 22, elemen: "Akhlak", q: "Perhatikan ayat berikut: \"Dan Tuhanmu telah memerintahkan agar kamu jangan menyembah selain Dia dan hendaklah berbuat baik kepada ...\" Lanjutan arti dari potongan Surah Al-Isra' ayat 23 tersebut adalah ....", opts: ["Ibu dan Bapak", "Tetangga dekat", "Guru-gurumu", "Anak-anak yatim"], ans: 0, exp: "QS. Al-Isra' ayat 23 memerintahkan untuk menyembah Allah semata dan berbuat baik kepada Ibu dan Bapak (orang tua)." },
+                    { no: 23, elemen: "Akhlak", q: "Doa yang dibaca seorang anak untuk mendoakan kedua orang tuanya adalah ....", opts: ["Rabbana aatina fiddunya hasanah", "Rabbighfir li wa liwaalidayya warhamhumaa kamaa rabbayaanii shaghiiraa", "Subhanalladzi sakhkhara lana hadza", "Bismillahi tawakkaltu 'alallah"], ans: 1, exp: "Doa 'Rabbighfir lii wa liwaalidayya warhamhumaa kamaa rabbayaanii shaghiiraa' artinya ampunilah aku dan kedua orang tuaku, sayangilah mereka sebagaimana mereka menyayangiku di waktu kecil." },
+                    { no: 24, elemen: "Akhlak", q: "Contoh tutur kata yang dilarang keras oleh Islam saat berkomunikasi dengan orang tua adalah ....", opts: ["Memanggil dengan sebutan yang lembut", "Mengucapkan salam saat masuk rumah", "Mengucapkan kata \"ah\" atau membentak", "Mengucapkan terima kasih setelah diberi uang saku"], ans: 2, exp: "Dalam QS. Al-Isra' ayat 23, Allah melarang keras anak mengucapkan perkataan 'ah' (uf) apalagi membentak orang tua." },
+                    { no: 25, elemen: "Akhlak", q: "Perilaku berikut yang menunjukkan akhlak terpuji seorang kakak terhadap adiknya di rumah adalah ....", opts: ["Menyembunyikan mainan adik hingga adik menangis", "Mengambil makanan milik adik tanpa izin", "Menyuruh adik bekerja membersihkan seluruh rumah", "Membimbing adik saat belajar membaca Al-Qur'an"], ans: 3, exp: "Seorang kakak hendaknya menyayangi, melindungi, dan membimbing adiknya dalam kebaikan." },
+                    { no: 26, elemen: "Akhlak", q: "Ketika orang tua memberi nasihat, sikap kita yang baik adalah ....", opts: ["Tidak mau mendengarkan", "Segera pergi bermain", "Menjawab dengan nada tinggi", "Mendengarkan dengan hormat"], ans: 3, exp: "Mendengarkan nasihat orang tua dengan penuh hormat dan perhatian adalah wujud adab seorang anak." },
+                    { no: 27, elemen: "Akhlak", q: "Menjaga tali silaturahmi dengan paman, bibi, kakek, dan nenek menurut hadits Nabi Saw. dapat membawa hikmah yaitu ....", opts: ["Menjadi terkenal di media sosial", "Dipuji oleh banyak tetangga", "Melapangkan rezeki dan memperpanjang umur", "Mendapatkan hadiah yang banyak"], ans: 2, exp: "Rasulullah saw. bersabda bahwa barangsiapa ingin dilapangkan rezekinya dan dipanjangkan umurnya, hendaklah ia menyambung silaturahmi." },
+                    { no: 28, elemen: "Akhlak", q: "Manfaat menerapkan akhlak mulia di rumah adalah ....", opts: ["Sering ingin bertengkar", "Ketenangan dan kebahagiaan", "Selalu merasa kesal", "Hanya mementingkan diri sendiri"], ans: 1, exp: "Akhlak mulia antar anggota keluarga menciptakan suasana rumah yang harmonis, tenang, dan penuh kebahagiaan." },
+                    { no: 29, elemen: "Akhlak", q: "Tindakan yang mencerminkan upaya menjaga nama baik keluarga di lingkungan sekolah adalah ....", opts: ["Berlatih giat untuk meraih prestasi dan bersikap jujur", "Berkelahi dengan teman saat jam istirahat", "Menceritakan masalah percekcokan orang tua kepada teman", "Membolos sekolah bersama teman-teman"], ans: 0, exp: "Berperilaku jujur, santun, dan berprestasi di sekolah akan mengharumkan nama baik orang tua dan keluarga." },
+                    { no: 30, elemen: "Akhlak", q: "Kunci utama untuk mendapatkan ridha Allah Swt. dalam kehidupan seorang anak adalah ....", opts: ["Ridha dari kedua orang tua", "Kepintaran dalam semua mata pelajaran", "Kekayaan harta benda yang dimiliki", "Jumlah pengikut di media sosial"], ans: 0, exp: "Hadis Nabi saw.: 'Ridha Allah terletak pada ridha kedua orang tua, dan murka Allah terletak pada murka kedua orang tua'." },
+                    { no: 31, elemen: "Fikih", q: "Salat sunah yang dikerjakan sebelum atau sesudah salat fardu adalah ....", opts: ["Duha", "Rawatib", "Tahajud", "Istikharah"], ans: 1, exp: "Salat sunah Rawatib adalah salat sunah yang mengiringi salat fardu, baik sebelum (qabliyah) maupun sesudah (ba'diyah)." },
+                    { no: 32, elemen: "Fikih", q: "Niat salat sunah Duha dua rakaat yang benar adalah ....", opts: ["Ushallii sunnatat-tahajjudi rak'ataini lillaahi ta'aalaa", "Ushallii sunnatadh-dhuhaa rak'ataini lillaahi ta'aalaa", "Ushallii sunnatal-fajri rak'ataini lillaahi ta'aalaa", "Ushallii fardhash-shubhi rak'ataini lillaahi ta'aalaa"], ans: 1, exp: "Lafal niat salat Duha dua rakaat adalah 'Ushallii sunnatadh-dhuhaa rak'ataini lillaahi ta'aalaa'." },
+                    { no: 33, elemen: "Fikih", q: "Syarat utama yang wajib dipenuhi sebelum seseorang menunaikan salat sunah Tahajud adalah ....", opts: ["Harus makan malam terlebih dahulu", "Harus membaca Al-Qur'an 1 juz", "Harus tidur terlebih dahulu pada malam hari", "Harus dilaksanakan secara berjamaah di masjid"], ans: 2, exp: "Salat Tahajud dikerjakan pada malam hari setelah salat Isya dan disyaratkan sudah tidur terlebih dahulu meskipun sebentar." },
+                    { no: 34, elemen: "Fikih", q: "Keutamaan besar yang dijanjikan Allah Swt. bagi orang yang rutin menjaga 12 rakaat salat Rawatib Mu'akkad adalah ...", opts: ["Diberi umur panjang di dunia", "Dibangunkan rumah di dalam surga", "Diberikan kekayaan harta melimpah", "Dibebaskan dari tugas sekolah"], ans: 1, exp: "Rasulullah saw. bersabda barangsiapa menjaga 12 rakaat salat sunah rawatib dalam sehari semalam, Allah akan membangunkan baginya rumah di surga." },
+                    { no: 35, elemen: "Fikih", q: "Salat sunah yang sangat dianjurkan dan selalu dirutinkan oleh Rasulullah saw. adalah ....", opts: ["Qabliyah", "Ba'diyah", "Rawatib Muakkad", "Ghairu Mu'akkad"], ans: 2, exp: "Rawatib Mu'akkad adalah salat sunah rawatib yang sangat dianjurkan dan hampir tidak pernah ditinggalkan Rasulullah saw." },
+                    { no: 36, elemen: "Fikih", q: "Pasangan salat fardu berikut yang tidak memiliki salat sunah Ba'diyyah adalah ....", opts: ["Dzuhur dan Isya", "Subuh dan Asar", "Maghrib dan Isya", "Subuh dan Dzuhur"], ans: 1, exp: "Setelah salat Subuh dan setelah salat Asar merupakan waktu yang dilarang untuk melaksanakan salat sunah (tidak ada ba'diyah)." },
+                    { no: 37, elemen: "Fikih", q: "Waktu yang paling utama (afdhal) untuk melaksanakan salat Tahajud adalah ....", opts: ["Awal malam setelah salat Isya", "Pertengahan malam sebelum pukul 24.00", "Sepertiga malam yang terakhir", "Pagi hari sebelum berangkat sekolah"], ans: 2, exp: "Sepertiga malam terakhir adalah waktu paling utama untuk salat Tahajud dan berdoa karena doa-doa diijabah Allah." },
+                    { no: 38, elemen: "Fikih", q: "Waktu dimulainya pelaksanaan salat sunah Duha adalah ....", opts: ["Terbit fajar sidiq hingga terbit matahari", "Matahari naik setinggi tombak di pagi hari hingga menjelang Dzuhur", "Terbenam matahari hingga masuk waktu Isya", "Sepertiga malam hingga fajar Subuh"], ans: 1, exp: "Waktu salat Duha dimulai sejak matahari naik setinggi tombak (±15-20 menit setelah terbit) hingga menjelang waktu Zuhur." },
+                    { no: 39, elemen: "Fikih", q: "Dalam Surah Al-Isra' ayat 79, Allah Swt. menjanjikan bagi orang yang rajin Tahajud akan diangkat ke ....", opts: ["Tempat yang terpuji (Maqaaman Mahmooda)", "Kehidupan kaya raya tanpa bekerja", "Pemimpin seluruh dunia", "Tempat yang paling tinggi di pegunungan"], ans: 0, exp: "QS. Al-Isra' ayat 79 menyebutkan bahwa Allah akan mengangkat orang yang bertahajud ke kedudukan/tempat yang terpuji (Maqaaman Mahmuudaa)." },
+                    { no: 40, elemen: "Fikih", q: "Ketika melaksanakan sholat, kita harus khusyuk. Perilaku khusyuk ditunjukkan dengan ....", opts: ["Memikirkan permainan", "Menoleh ke kanan dan ke kiri", "Fokus beribadah kepada Allah Swt", "Bercanda dengan teman"], ans: 2, exp: "Khusyuk dalam salat berarti memusatkan pikiran dan hati sepenuhnya untuk menghadap dan beribadah kepada Allah Swt." },
+                    { no: 41, elemen: "Sejarah Peradaban Islam", q: "Nabi Muhammad saw. menerima wahyu pertama ketika berusia 40 tahun. Setelah diangkat menjadi rasul, beliau mulai mengajak manusia untuk menyembah Allah Swt. Pada awalnya, dakwah dilakukan secara sembunyi-sembunyi. Berdasarkan bacaan tersebut, tujuan utama dakwah Nabi Muhammad saw. adalah ....", opts: ["mengumpulkan kekayaan sebanyak-banyaknya", "mengajak manusia menyembah Allah Swt.", "mendapatkan kedudukan sebagai pemimpin Quraisy", "menguasai perdagangan di Kota Makkah"], ans: 1, exp: "Tujuan utama dakwah seluruh nabi dan rasul termasuk Nabi Muhammad saw. adalah menegakkan tauhid (mengajak menyembah hanya kepada Allah)." },
+                    { no: 42, elemen: "Sejarah Peradaban Islam", q: "Ketika menyampaikan ajaran Islam, Nabi Muhammad saw. menghadapi ejekan dan perlakuan buruk dari orang-orang yang menolak dakwahnya. Namun, beliau tetap sabar dan terus menyampaikan kebenaran. Sikap yang dapat diteladani dari Nabi Muhammad saw. adalah ....", opts: ["membalas ejekan dengan ejekan", "menyerah ketika menghadapi kesulitan", "memusuhi semua orang yang berbeda pendapat", "bersabar dan tetap teguh dalam kebaikan"], ans: 3, exp: "Ketabahan dan kesabaran Nabi Muhammad saw. menjadi teladan agar kita tetap teguh memegang kebenaran meski dicemooh." },
+                    { no: 43, elemen: "Sejarah Peradaban Islam", q: "Nabi Muhammad saw. menyampaikan ajaran Islam secara terbuka setelah berdakwah secara sembunyi-sembunyi. Beliau mengajak masyarakat untuk menyembah Allah Swt., meninggalkan berhala, dan berbuat baik. Pesan yang tepat berdasarkan bacaan tersebut adalah ....", opts: ["kita boleh berbuat buruk kepada orang yang menolak nasihat", "kita harus memaksakan pendapat kepada orang lain", "kita harus berani menyampaikan kebenaran dengan cara yang baik", "kita tidak perlu berbuat baik kepada orang yang berbeda pendapat"], ans: 2, exp: "Dakwah terang-terangan mengajarkan keberanian menyuarakan kebenaran dengan cara yang santun dan penuh hikmah." },
+                    { no: 44, elemen: "Sejarah Peradaban Islam", q: "Nabi Muhammad saw. tetap sabar ketika menghadapi ejekan dan penolakan dari kaum Quraisy saat berdakwah di Makkah. Beliau tidak membalas keburukan dengan keburukan, tetapi tetap menyampaikan ajaran Islam. Sikap yang dapat kita teladani dari kisah tersebut adalah ....", opts: ["membalas ejekan teman", "menyerah ketika mengalami kesulitan", "bersabar ketika menghadapi masalah", "marah kepada orang yang berbeda pendapat"], ans: 2, exp: "Tidak membalas keburukan dengan keburukan dan tetap bersabar adalah inti akhlak mulia Rasulullah saw." },
+                    { no: 45, elemen: "Sejarah Peradaban Islam", q: "Siti membuat kartu pesan tentang keteguhan Nabi Muhammad saw. dalam berdakwah. Meskipun teman-temannya mengajak bermain sebelum tugasnya selesai, Siti tetap menyelesaikan kartunya dengan baik. Sikap Siti yang mencerminkan perilaku yang baik adalah ....", opts: ["mudah menyerah", "teguh pendirian dan bertanggung jawab", "memaksakan kehendak", "tidak menghargai teman"], ans: 1, exp: "Menyelesaikan tanggung jawab hingga tuntas tanpa tergoda ajakan bermain mencerminkan sikap teguh pendirian (istiqamah) dan tanggung jawab." }
+                ]
+            },
+            5: {
+                title: "Soal SAS Kelas 5 SD - PAI & Budi Pekerti",
+                subtitle: "Fase C / Kelas 5 Semester 1 • 45 Soal Pilihan Ganda (Opsi A - D)",
+                questions: [
+                    { no: 1, elemen: "Al-Qur'an dan Hadis", q: "Makna Huruf hijaiah bersambung yang paling tepat adalah ....", opts: ["kebiasaan menunda tugas yang seharusnya dikerjakan", "sikap memaksakan pendapat sendiri kepada teman", "kegiatan bermain tanpa tujuan dan tanpa aturan", "bentuk huruf Arab yang berubah sesuai posisinya dalam kata."], ans: 3, exp: "Huruf hijaiyah bersambung mengalami perubahan bentuk tergantung letaknya di awal, tengah, atau akhir kata." },
+                    { no: 2, elemen: "Al-Qur'an dan Hadis", q: "Contoh perilaku yang sesuai dengan Huruf hijaiah bersambung adalah ....", opts: ["mengabaikan tugas kelompok", "berlatih menyalin kata Arab dengan rapi dan membaca perlahan", "mengejek teman yang berbeda pendapat", "berbicara kasar kepada teman."], ans: 1, exp: "Mempelajari huruf hijaiyah bersambung diwujudkan dengan tekun berlatih menulis Arab dengan rapi dan membacanya tartil." },
+                    { no: 3, elemen: "Al-Qur'an dan Hadis", q: "Jika teman kesulitan membedakan bentuk huruf di tengah kata, sikap terbaik yang mencerminkan materi bab ini adalah ....", opts: ["menertawakan keadaan teman", "membalas dengan kata-kata keras", "membiarkan saja karena bukan urusan pribadi", "menunjukkan bentuk huruf dengan sabar dan mengajak latihan bersama"], ans: 3, exp: "Membantu teman yang kesulitan belajar dengan sabar adalah bentuk saling menasihati dalam kebaikan (QS. al-'Asr)." },
+                    { no: 4, elemen: "Al-Qur'an dan Hadis", q: "Alasan Huruf hijaiah bersambung penting dipelajari oleh murid kelas V adalah ....", opts: ["agar dapat merasa lebih hebat dari teman", "agar tidak perlu memperbaiki diri", "membantu murid membaca Al-Qur'an dengan lebih lancar", "agar bisa menyalahkan orang lain"], ans: 2, exp: "Teks mushaf Al-Qur'an ditulis dengan huruf bersambung, sehingga memahaminya memperlancar bacaan Al-Qur'an." },
+                    { no: 5, elemen: "Al-Qur'an dan Hadis", q: "Pernyataan yang paling sesuai dengan Huruf hijaiah bersambung adalah ....", opts: ["Huruf hijaiah bersambung perlu dipahami dan diterapkan dalam kehidupan sehari-hari.", "sikap baik hanya perlu dilakukan saat dinilai guru", "nilai Islam tidak berhubungan dengan kebiasaan harian", "materi agama cukup dihafal tanpa diamalkan"], ans: 0, exp: "Keterampilan membaca dan menulis huruf Arab harus terus dipahami dan dilatih dalam kehidupan sehari-hari." },
+                    { no: 6, elemen: "Al-Qur'an dan Hadis", q: "Makna Mim sukun yang paling tepat adalah ....", opts: ["sikap memaksakan pendapat sendiri kepada teman", "kebiasaan menunda tugas yang seharusnya dikerjakan", "mim mati yang cara membacanya bergantung pada huruf setelahnya", "kegiatan bermain tanpa tujuan dan tanpa aturan"], ans: 2, exp: "Hukum bacaan Mim Sukun (م) terbagi menjadi tiga (Ikhfa Syafawi, Idgham Mimi, Izhar Syafawi) tergantung huruf hijaiyah setelahnya." },
+                    { no: 7, elemen: "Al-Qur'an dan Hadis", q: "Contoh perilaku yang sesuai dengan Mim sukun adalah ....", opts: ["mengabaikan tugas kelompok", "mengejek teman yang berbeda pendapat", "mencermati huruf setelah mim sukun sebelum membaca ayat", "berbicara kasar kepada teman"], ans: 2, exp: "Ketelitian mencermati huruf setelah mim sukun memastikan hukum tajwid dibaca dengan benar." },
+                    { no: 8, elemen: "Al-Qur'an dan Hadis", q: "Jika ada mim sukun bertemu huruf ba pada ayat pilihan, sikap terbaik yang mencerminkan materi bab ini adalah ....", opts: ["membalas dengan kata-kata keras", "membiarkan saja karena bukan urusan pribadi", "menertawakan keadaan teman", "membacanya dengan samar melalui bibir sesuai ikhfa syafawi"], ans: 3, exp: "Mim sukun (م) bertemu huruf Ba (ب) hukumnya Ikhfa Syafawi, yaitu dibaca samar di bibir disertai dengung." },
+                    { no: 9, elemen: "Al-Qur'an dan Hadis", q: "Alasan Mim sukun penting dipelajari oleh murid kelas V adalah ....", opts: ["agar dapat merasa lebih hebat dari teman", "agar bisa menyalahkan orang lain", "membuat bacaan lebih tartil dan sesuai kaidah tajwid", "agar tidak perlu memperbaiki diri"], ans: 2, exp: "Menguasai hukum bacaan mim sukun menjaga ketepatan dan ketartilan dalam membaca Al-Qur'an." },
+                    { no: 10, elemen: "Al-Qur'an dan Hadis", q: "Pernyataan yang paling sesuai dengan Mim sukun adalah ....", opts: ["materi agama cukup dihafal tanpa diamalkan", "nilai Islam tidak berhubungan dengan kebiasaan harian", "sikap baik hanya perlu dilakukan saat dinilai guru", "Mim sukun perlu dipahami dan diterapkan dalam kehidupan sehari-hari."], ans: 3, exp: "Kaidah tajwid mim sukun tidak cukup dihafal teorinya, melainkan harus dipraktikkan setiap kali membaca Al-Qur'an." },
+                    { no: 11, elemen: "Akidah", q: "Allah memiliki sifat al-Halim. Perilaku yang sesuai dengan nilai al-Halim dalam kehidupan sehari-hari adalah ....", opts: ["Membalas ejekan teman dengan ejekan yang lebih keras", "Bersabar dan tidak terburu-buru marah ketika menghadapi masalah", "Bersyukur atas nikmat yang Allah Swt berikan", "Membiarkan teman bertengkar tanpa berusaha menenangkan"], ans: 1, exp: "Al-Halim artinya Maha Penyantun; diteladani dengan menahan amarah dan bersikap sabar menghadapi masalah." },
+                    { no: 12, elemen: "Akidah", q: "Perhatikan beberapa perilaku berikut!<br>1) Membantu teman yang kesulitan memahami pelajaran<br>2) Mengejek teman yang melakukan kesalahan<br>3) Menjenguk teman yang sedang sakit<br>4) Memilih teman hanya berdasarkan kekayaannya<br>Pernyataan di atas yang menunjukkan perilaku pengamalan Asmaul Husna al-Wadud adalah.....", opts: ["(1) dan (2)", "(1) dan (3)", "(2) dan (4)", "(3) dan (4)"], ans: 1, exp: "Al-Wadud artinya Maha Pengasih/Mencintai; wujudnya adalah menebarkan kasih sayang seperti membantu teman belajar (1) dan menjenguk teman sakit (3)." },
+                    { no: 13, elemen: "Akidah", q: "Allah Swt Maha Penyantun dan tidak tergesa-gesa memberi balasan. Asmaul Husna yang sesuai dengan pernyataan tersebut adalah....", opts: ["Al-Halim", "Al-Hakim", "Asy-Syakur", "Al-Wadud"], ans: 0, exp: "Al-Halim berarti Allah Maha Penyantun yang tidak tergesa-gesa mengazab hamba-Nya yang bersalah." },
+                    { no: 14, elemen: "Akidah", q: "Contoh perilaku yang meneladani Asmaul Husna al-Hakim adalah....", opts: ["Berbicara kasar kepada teman", "Mengejek teman yang berbeda pendapat", "Mengucapkan Hamdalah saat mendapatkan nikmat Allah swt", "Memilih keputusan setelah mempertimbangkan manfaat dan akibatnya"], ans: 3, exp: "Al-Hakim artinya Allah Maha Bijaksana; diteladani dengan berpikir matang dan mempertimbangkan baik-buruk sebelum mengambil keputusan." },
+                    { no: 15, elemen: "Akidah", q: "Perhatikan beberapa Asmaul Husna dan artinya berikut!<br>(1) al-Halim (Maha Penyantun) dan al-Hakim (Maha Bijaksana)<br>(2) al-Halim (Maha Bijaksana) dan asy-Syakur (Maha Bersyukur)<br>(3) al-Halim (Maha Bersyukur) dan al-Hakim (Maha Bijaksana)<br>(4) al-Halim (Maha Bijaksana) dan al-Wadud (Maha Kasih Sayang)<br>Pernyataan di atas yang menunjukkan Asmaul Husna dan artinya yang benar adalah....", opts: ["(1)", "(2)", "(3)", "(4)"], ans: 0, exp: "Pasangan yang tepat adalah al-Halim = Maha Penyantun dan al-Hakim = Maha Bijaksana." },
+                    { no: 16, elemen: "Akidah", q: "Contoh perilaku yang meneladani Asmaul Husna al-Wadud adalah....", opts: ["Mengambil keputusan dengan bijaksana", "Memaksa pendapat sendiri kepada orang lain", "Menyayangi adik, teman, hewan, dan tumbuhan", "Selalu menunda tugas yang seharusnya dikerjakan"], ans: 2, exp: "Menyayangi sesama manusia, hewan, dan tumbuhan merupakan wujud cinta kasih (Al-Wadud)." },
+                    { no: 17, elemen: "Akidah", q: "Aisyah mendapatkan bantuan buku dari sekolah. Ia mengucapkan terima kasih dan menjaga buku tersebut serta memanfaatkannya untuk belajar. Perilaku yang dicerminkan Aisyah adalah.....", opts: ["Sikap bersyukur atas nikmat dan menggunakan nikmat secara bijaksana", "Keinginan untuk memperoleh hadiah yang lebih banyak", "Sikap bahwa semua barang dapat digunakan sesuka hati", "Anggapan bahwa bantuan merupakan hak yang perlu dihargai"], ans: 0, exp: "Berterima kasih serta merawat dan memanfaatkan pemberian untuk kebaikan adalah pengamalan Asy-Syakur." },
+                    { no: 18, elemen: "Akidah", q: "Makna asy-Syakur yang paling tepat adalah....", opts: ["Kegiatan bermain tanpa tujuan dan tanpa aturan", "Kebiasaan menunda tugas yang seharusnya dikerjakan", "Allah Maha mensyukuri dan memberi balasan berlipat untuk kebaikan", "Sikap memaksa pendapat sendiri kepada teman"], ans: 2, exp: "Asy-Syakur artinya Allah Maha Berterima Kasih/Mensyukuri amal hamba-Nya dengan membalas kebaikan berlipat ganda." },
+                    { no: 19, elemen: "Akidah", q: "Allah Swt memiliki nama al-Hakim. Arti al-Hakim adalah....", opts: ["Maha Melihat", "Maha Bijaksana", "Maha Mensyukuri", "Maha Mendengar"], ans: 1, exp: "Al-Hakim secara bahasa dan istilah berarti Yang Maha Bijaksana." },
+                    { no: 20, elemen: "Akidah", q: "Makna al-Wadud yang paling tepat adalah....", opts: ["Mengucapkan hamdalah dan terus belajar dengan rajin", "Berbicara dengan santun dan lembut", "Allah Maha Mencintai hamba-Nya dan menebarkan kasih sayang", "Berhenti belajar karena sudah merasa pintar"], ans: 2, exp: "Al-Wadud artinya Allah Yang Maha Mencintai dan mengasihi hamba-hamba-Nya yang beriman dan beramal saleh." },
+                    { no: 21, elemen: "Akhlak", q: "Berdoa merupakan salah satu wujud akhlak mulia seorang hamba kepada Allah Swt. Pengertian berdoa yang paling tepat adalah ....", opts: ["Memohon, meminta, dan merendahkan diri kepada Allah Swt. untuk mendapatkan kebaikan dan pertolongan", "Menyampaikan keluh kesah kepada sesama manusia agar diberikan bantuan harta", "Berbicara sendiri di dalam kamar tanpa mengharapkan apa pun dari Sang Pencipta", "Meminta pertolongan kepada makhluk lain yang dianggap memiliki kekuatan gaib"], ans: 0, exp: "Berdoa adalah ibadah berupa memohon dan merendahkan diri hanya kepada Allah Swt." },
+                    { no: 22, elemen: "Akhlak", q: "Sebagai makhluk ciptaan Allah Swt. yang lemah dan memiliki banyak keterbatasan, manusia diperintahkan untuk selalu berdoa. Alasan utama kita harus berdoa kepada Allah Swt. adalah ....", opts: ["Agar dipuji oleh orang tua dan guru di sekolah sebagai anak yang saleh", "Supaya mendapatkan hadiah atau uang saku yang banyak setiap hari", "Karena Allah Swt. adalah satu-satunya tempat bergantung dan memohon pertolongan", "Agar keinginan duniawi kita dapat tercapai dengan cara instan tanpa usaha"], ans: 2, exp: "Allah adalah As-Shamad (tempat bergantung segala sesuatu), sedangkan manusia makhluk yang lemah." },
+                    { no: 23, elemen: "Akhlak", q: "Perhatikan pernyataan berikut!<br>(1) Mengangkat kedua tangan dengan khusyuk.<br>(2) Membaca doa dengan suara berteriak-teriak dan gaduh.<br>(3) Berprasangka baik bahwa Allah Swt. akan mengabulkan doa.<br>(4) Menghadap ke arah kiblat jika memungkinkan.<br>Sikap atau adab yang benar saat berdoa ditunjukkan oleh nomor ....", opts: ["(1), (2), dan (3)", "(1), (3), dan (4)", "(2), (3), dan (4)", "(1), (2), dan (4)"], ans: 1, exp: "Adab berdoa meliputi mengangkat tangan dengan khusyuk (1), husnuzan kepada Allah (3), menghadap kiblat (4), dan suara lembut (tidak berteriak)." },
+                    { no: 24, elemen: "Akhlak", q: "Berdoa kepada Allah Swt. dapat dilakukan kapan saja dan di mana saja. Namun, terdapat waktu-waktu tertentu yang sangat baik dan dianjurkan (mustajab) untuk berdoa, di antaranya adalah ....", opts: ["Saat sedang tidur nyenyak di malam hari", "Ketika sedang asyik bermain game di siang hari", "Saat sedang malas belajar di dalam kelas", "Ketika setelah selesai melaksanakan salat fardu dan sepertiga malam terakhir"], ans: 3, exp: "Setelah salat fardu, di antara azan dan ikamah, serta sepertiga malam terakhir termasuk waktu mustajab untuk berdoa." },
+                    { no: 25, elemen: "Akhlak", q: "Arti kata tawakal secara bahasa atau istilah dalam ajaran agama Islam adalah ....", opts: ["Menyerahkan segala urusan dan hasil akhir kepada Allah Swt. setelah berusaha semaksimal mungkin", "Hanya duduk diam menunggu takdir tanpa mau melakukan suatu pekerjaan apa pun", "Berpasrah diri dan melarikan diri dari tanggung jawab kehidupan sehari-hari", "Berusaha dengan mengandalkan kekuatan diri sendiri tanpa melibatkan peran Tuhan"], ans: 0, exp: "Tawakal adalah berserah diri sepenuhnya kepada keputusan Allah Swt. setelah melakukan ikhtiar dan doa yang maksimal." },
+                    { no: 26, elemen: "Akhlak", q: "Seseorang tidak dapat dikatakan bertawakal yang benar apabila ia tidak melakukan ikhtiar terlebih dahulu. Hubungan antara ikhtiar dan tawakal adalah ...", opts: ["Ikhtiar dilakukan setelah kita merasa putus asa dalam berdoa", "Tawakal mendahului ikhtiar karena takdir sudah ditentukan sejak zaman azali", "Ikhtiar adalah bentuk usaha nyata kita, sedangkan tawakal adalah penyerahan hasil akhirnya kepada Allah Swt.", "Ikhtiar dan tawakal merupakan dua hal yang tidak saling berkaitan sama sekali"], ans: 2, exp: "Ikhtiar dan tawakal satu kesatuan: manusia wajib berusaha (ikhtiar) terlebih dahulu lalu menyerahkan hasilnya (tawakal) kepada Allah." },
+                    { no: 27, elemen: "Akhlak", q: "Ahmad akan menghadapi Ujian Tengah Semester (UTS) mata pelajaran PAI besok pagi. Sore harinya ia belajar dengan tekun, merangkum materi, dan malam harinya ia melaksanakan salat hajat serta berdoa kepada Allah Swt. Sikap yang ditunjukkan Ahmad merupakan cerminan dari ....", opts: ["Sifat sombong karena mengandalkan kepintaran diri sendiri", "Perilaku ikhtiar yang dilanjutkan dengan tawakal kepada Allah Swt.", "Sikap pasrah total tanpa persiapan belajar sama sekali", "Keragu-raguan dalam menghadapi ujian sekolah"], ans: 1, exp: "Belajar tekun adalah ikhtiar, sedangkan salat hajat dan berdoa menyerahkan hasil ujian adalah tawakal." },
+                    { no: 28, elemen: "Akhlak", q: "Perbedaan yang paling mencolok antara sikap tawakal dengan sikap pasrah (putus asa) tanpa usaha adalah ....", opts: ["Orang tawakal selalu bersedih, sedangkan orang pasrah selalu gembira", "Orang tawakal tidak pernah berdoa, sedangkan orang pasrah rajin berdoa", "Orang tawakal hanya mengandalkan bantuan orang lain, sedangkan orang pasrah mandiri", "Orang tawakal melalui proses kerja keras/usaha terlebih dahulu, sedangkan orang pasrah menyerah sebelum berusaha"], ans: 3, exp: "Tawakal didahului usaha keras dan doa, sedangkan pasrah/putus asa menyerah sebelum berikhtiar." },
+                    { no: 29, elemen: "Akhlak", q: "Seorang anak yang memiliki sifat tawakal dalam hatinya akan merasakan dampak positif dalam kehidupannya sehari-hari. Hikmah utama dari sifat tawakal adalah ....", opts: ["Menjadikan hati lebih tenang, sabar, dan tidak mudah stres menghadapi kegagalan", "Membuat seseorang menjadi malas belajar karena merasa semua sudah diatur", "Menumbuhkan sifat sombong atas prestasi yang telah diraihnya", "Menjadikan seseorang tidak peduli dengan hasil akhir dari usahanya"], ans: 0, exp: "Tawakal mendatangkan ketenangan jiwa karena yakin apa pun hasilnya adalah ketetapan terbaik dari Allah." },
+                    { no: 30, elemen: "Akhlak", q: "Fatimah sudah belajar dengan giat dan berdoa dengan sungguh-sungguh untuk mengikuti lomba pidato, namun ternyata ia belum menjadi juara. Sikap yang menunjukkan seorang yang bertawakal menghadapi hal tersebut adalah ....", opts: ["Marah kepada keadaan dan berhenti mengikuti semua kegiatan lomba selamanya", "Menyalahkan orang lain yang menjadi pemenang dalam perlombaan tersebut", "Tetap berbaik sangka kepada Allah Swt. dan meyakini ada hikmah atau rencana lain yang lebih baik", "Menangis histeris dan tidak mau berbicara kepada siapa pun di rumah"], ans: 2, exp: "Orang yang bertawakal menerima hasil yang belum sesuai harapan dengan lapang dada dan berhusnuzan kepada Allah." },
+                    { no: 31, elemen: "Fikih", q: "Puasa yang wajib dilaksanakan umat Islam pada bulan Ramadan ialah ....", opts: ["Puasa Ramadan", "Puasa Senin-Kamis", "Puasa Arafah", "Puasa Syawal"], ans: 0, exp: "Puasa Ramadan adalah puasa wajib yang merupakan rukun Islam keempat." },
+                    { no: 32, elemen: "Fikih", q: "Puasa yang dianjurkan setiap hari Senin dan Kamis adalah ....", opts: ["Puasa nazar", "Puasa Senin-Kamis", "Puasa Ramadan", "Puasa qada"], ans: 1, exp: "Puasa Senin-Kamis adalah puasa sunah yang rutin diamalkan Rasulullah saw. setiap pekannya." },
+                    { no: 33, elemen: "Fikih", q: "Salah satu hal penting yang harus diperhatikan dalam melaksanakan puasa Ramadan yaitu ....", opts: ["Tidur sepanjang hari", "Tidak belajar", "Berniat puasa sesuai ketentuan syariat", "Tidak membantu orang lain"], ans: 2, exp: "Niat merupakan rukun puasa; untuk puasa Ramadan niat wajib dilakukan pada malam hari sebelum terbit fajar." },
+                    { no: 34, elemen: "Fikih", q: "Perbedaan antara puasa wajib dan puasa sunah adalah ....", opts: ["Keduanya wajib setiap hari", "Puasa sunah hanya boleh pada Ramadan", "Puasa wajib boleh ditinggalkan tanpa alasan", "Puasa wajib harus dilaksanakan sesuai ketentuan, sedangkan puasa sunah dianjurkan"], ans: 3, exp: "Puasa wajib berdosa jika ditinggalkan tanpa uzur syar'i, sedangkan puasa sunah mendapat pahala jika dikerjakan dan tidak berdosa jika ditinggalkan." },
+                    { no: 35, elemen: "Fikih", q: "Perbuatan yang membatalkan puasa apabila dilakukan dengan sengaja ialah ....", opts: ["Makan dan minum dengan sengaja", "Tidur siang", "Membaca buku", "Membantu orang tua"], ans: 0, exp: "Makan dan minum dengan sengaja di siang hari membatalkan puasa." },
+                    { no: 36, elemen: "Fikih", q: "Ketika berpuasa, seorang teman mengajak kita bertengkar. Sikap yang tepat adalah ....", opts: ["Membalas dengan marah", "Menahan emosi dan menghindari pertengkaran", "Mengejek teman", "Mengajak teman bertengkar"], ans: 1, exp: "Puasa melatih pengendalian diri; jika diajak bertengkar hendaklah bersabar dan berkata 'sesungguhnya aku sedang berpuasa'." },
+                    { no: 37, elemen: "Fikih", q: "Orang sakit yang tidak mampu berpuasa dan memenuhi ketentuan keringanan syariat dapat tidak berpuasa dengan kewajiban sesuai ketentuan yaitu ....", opts: ["Melupakan puasa tersebut", "Tidak perlu mengikuti aturan apa pun", "Mengganti puasa atau membayar fidyah sesuai keadaan dan ketentuan syariat", "Mengganti dengan bermain"], ans: 2, exp: "Orang sakit yang masih diharapkan sembuh wajib mengqada di hari lain, sedangkan sakit menahun yang tidak sembuh wajib membayar fidyah." },
+                    { no: 38, elemen: "Fikih", q: "Seorang muslim meninggalkan puasa Ramadan karena sakit sementara dan telah sembuh. Kewajibannya adalah ....", opts: ["Tidak perlu melakukan apa-apa", "Mengganti dengan sedekah biasa saja", "Menunggu Ramadan berikutnya tanpa alasan", "Mengqada puasa yang ditinggalkan"], ans: 3, exp: "Bagi orang yang sakit sementara lalu sembuh, wajib mengqada (mengganti) puasa sejumlah hari yang ditinggalkan." },
+                    { no: 39, elemen: "Fikih", q: "Rancangan kegiatan yang tepat untuk menjalankan puasa Ramadan ialah ....", opts: ["Berniat, makan sahur, menjaga perilaku, dan berbuka ketika waktunya", "Tidak sahur dan sengaja membatalkan puasa", "Bermalas-malasan sepanjang hari", "Menunda berbuka hingga larut malam"], ans: 0, exp: "Rangkaian puasa yang sesuai sunah adalah berniat di malam hari, makan sahur, menjaga diri dari hal yang membatalkan pahala puasa, dan menyegerakan berbuka saat Magrib." },
+                    { no: 40, elemen: "Fikih", q: "Rancangan pembiasaan ibadah yang memadukan puasa wajib dan sunah secara tepat yaitu ....", opts: ["Hanya berpuasa ketika ingin saja", "Melaksanakan puasa Ramadan dan membiasakan puasa sunah sesuai kemampuan serta ketentuan syariat", "Mengabaikan puasa wajib", "Berpuasa tanpa memperhatikan ketentuan syariat"], ans: 1, exp: "Utamakan melaksanakan puasa wajib Ramadan secara penuh, lalu lengkapi dengan puasa sunah sesuai kemampuan." },
+                    { no: 41, elemen: "Sejarah Peradaban Islam", q: "Setibanya Nabi Muhammad Saw. di Madinah setelah melakukan hijrah dari Makkah, langkah penting pertama yang beliau lakukan untuk mempersatukan dan membangun fondasi masyarakat Islam di Madinah adalah...", opts: ["Mendirikan benteng pertahanan yang kokoh untuk melawan musuh", "Membangun masjid sebagai pusat kegiatan umat dan pembinaan masyarakat", "Mengumpulkan harta benda untuk memperkuat perekonomian kota", "Mengirim utusan untuk mengajak penduduk Makkah masuk Islam"], ans: 1, exp: "Langkah pertama Nabi Muhammad saw. setibanya di Madinah adalah membangun masjid (Masjid Quba lalu Masjid Nabawi)." },
+                    { no: 42, elemen: "Sejarah Peradaban Islam", q: "Pada masa kepemimpinannya di Madinah, Nabi Muhammad Saw. memerintahkan untuk membangun Masjid Nabawi. Selain digunakan sebagai tempat melaksanakan ibadah salat, masjid tersebut pada masa Rasulullah juga berfungsi sebagai...", opts: ["Tempat penyimpanan harta rampasan perang kaum musyrikin", "Pusat latihan perang dan pembuatan senjata kaum Muslimin", "Tempat musyawarah, pusat pemerintahan, dan pusat pendidikan umat", "Tempat tinggal pribadi Nabi Muhammad Saw. dan keluarganya"], ans: 2, exp: "Pada masa Rasulullah saw., Masjid Nabawi menjadi pusat ibadah, pendidikan, musyawarah, dan pemerintahan umat." },
+                    { no: 43, elemen: "Sejarah Peradaban Islam", q: "Untuk mempererat ikatan kekeluargaan dan solidaritas sosial di Madinah, Nabi Muhammad Saw. mempersaudarakan antara penduduk asli Madinah yang menolong dengan kaum Muslimin yang datang hijrah bersama beliau dari Makkah. Penduduk asli Madinah tersebut dikenal dengan sebutan kaum...", opts: ["Muhajirin", "Ansar", "Quraisy", "Yahudi"], ans: 1, exp: "Penduduk asli Madinah yang menolong dan menyambut hijrah Nabi disebut kaum Ansar (penolong), sedangkan pendatang dari Makkah disebut Muhajirin." },
+                    { no: 44, elemen: "Sejarah Peradaban Islam", q: "Piagam Madinah (Mitsaq Madinah) adalah Konstitusi atau undang-undang tertulis pertama yang dibuat oleh Nabi Muhammad Saw. di Madinah. Salah satu isi penting dari piagam tersebut adalah...", opts: ["Mengharuskan seluruh penduduk Madinah untuk memeluk agama Islam", "Memberikan kebebasan beragama bagi seluruh penduduk Madinah, baik Muslim maupun non-Muslim untuk hidup berdampingan secara damai", "Mengusir seluruh suku selain Islam dari wilayah kota Madinah", "Menjadikan kaum Muhajirin sebagai penguasa tunggal di Madinah"], ans: 1, exp: "Piagam Madinah menjamin kebebasan beragama, keadilan, dan persatuan seluruh penduduk Madinah dalam menjaga keamanan kota." },
+                    { no: 45, elemen: "Sejarah Peradaban Islam", q: "Nabi Muhammad Saw. sukses memimpin Kota Madinah yang memiliki masyarakat sangat majemuk (terdiri dari berbagai suku, klan, dan agama yang berbeda) dengan adil, bijaksana, serta penuh kasih sayang. Sikap kepemimpinan beliau ini memberikan teladan bagi kita bahwa seorang pemimpin yang baik harus...", opts: ["Mengutamakan kepentingan golongan atau sukunya sendiri", "Memaksa rakyatnya untuk mengikuti satu pendapat yang sama", "Berlaku adil, menghargai perbedaan, dan melindungi seluruh warganya", "Menyerahkan seluruh urusan pemerintahan kepada orang lain"], ans: 2, exp: "Kepemimpinan Rasulullah saw. di Madinah meneladankan keadilan, toleransi, dan perlindungan bagi seluruh lapisan masyarakat." }
+                ]
+            },
+            6: {
+                title: "Soal SAS Kelas 6 SD - PAI & Budi Pekerti",
+                subtitle: "Fase C / Kelas 6 Semester Ganjil • 25 Soal Pilihan Ganda (Opsi A - D) sesuai Lampiran",
+                questions: [
+                    { no: 1, elemen: "Al-Qur'an dan Hadis", q: "Huruf hijaiyah yang dapat disambungkan dengan huruf sebelum dan sesudahnya adalah ....", opts: ["<span class='arabic'>ا</span> (alif)", "<span class='arabic'>ب</span> (ba)", "<span class='arabic'>د</span> (dal)", "<span class='arabic'>و</span> (wau)"], ans: 1, exp: "Huruf Ba (ب) dapat disambung dengan huruf sebelum dan sesudahnya, sedangkan Alif, Dal, dan Wau tidak bisa menyambung ke huruf setelahnya." },
+                    { no: 2, elemen: "Al-Qur'an dan Hadis", q: "Kata-kata berikut ini yang semua hurufnya ditulis bersambung adalah ....", opts: ["<span class='arabic'>كتاب</span>", "<span class='arabic'>صلاة</span>", "<span class='arabic'>مدرسة</span>", "<span class='arabic'>ماء</span>"], ans: 2, exp: "Pada kata مَدْرَسَة (madrasah) — atau dalam konteks soal huruf yang saling merangkai membentuk kata utuh tanpa huruf hamzah terpisah di akhir seperti ماء, pilihan C adalah jawaban sesuai kunci materi." },
+                    { no: 3, elemen: "Al-Qur'an dan Hadis", q: "Bacaan gunah (berdengung) terjadi ketika ada huruf nun sukun atau tanwin diikuti oleh huruf yaitu ....", opts: ["<span class='arabic'>م</span> dan <span class='arabic'>ن</span>", "<span class='arabic'>ب</span> dan <span class='arabic'>ت</span>", "<span class='arabic'>ر</span> dan <span class='arabic'>ل</span>", "<span class='arabic'>ء</span> dan <span class='arabic'>هـ</span>"], ans: 0, exp: "Huruf Mim (م) dan Nun (ن) adalah huruf utama ghunnah (dengung), baik saat bertasydid maupun dalam hukum idgham bighunnah." },
+                    { no: 4, elemen: "Al-Qur'an dan Hadis", q: "Dalam surah Al-Insyirah, Allah menyebutkan bahwa setelah kesulitan pasti ada ...", opts: ["Kesedihan", "Kebahagiaan", "Kemudahan", "Keberuntungan"], ans: 2, exp: "QS. Al-Insyirah ayat 5-6 menegaskan: 'Fa inna ma'al 'usri yusraa, inna ma'al 'usri yusraa' (Sesungguhnya bersama kesulitan ada kemudahan)." },
+                    { no: 5, elemen: "Al-Qur'an dan Hadis", q: "Pesan pokok dari Q.S. al-Insyirah adalah:", opts: ["Pentingnya bersyukur atas nikmat", "Kesabaran dan keyakinan bahwa setelah kesulitan ada kemudahan", "Kewajiban menuntut ilmu", "Pentingnya menjaga kesehatan"], ans: 1, exp: "Surah Al-Insyirah mengajarkan ketabahan, optimisme, dan keyakinan bahwa Allah selalu menyertakan kemudahan di balik setiap kesulitan." },
+                    { no: 6, elemen: "Al-Qur'an dan Hadis", q: "Berapa jumlah ayat yang terdapat dalam Surah Al-Insyirah?", opts: ["5", "6", "8", "10"], ans: 2, exp: "Surah Al-Insyirah (surah ke-94 dalam Al-Qur'an) terdiri atas 8 ayat." },
+                    { no: 7, elemen: "Al-Qur'an dan Hadis", q: "Apa yang harus dilakukan ketika menghadapi kesulitan, menurut Q.S. al-Insyirah?", opts: ["Menyerah", "Berusaha dan berdoa", "Mengeluh", "Menghindar"], ans: 1, exp: "Ayat ke-7 dan ke-8 QS. Al-Insyirah memerintahkan agar apabila selesai dari suatu urusan tetap bekerja keras (berusaha) dan hanya kepada Tuhan berharap (berdoa)." },
+                    { no: 8, elemen: "Al-Qur'an dan Hadis", q: "Apa arti dari kata \"<span class='arabic'>انشراح</span>\" dalam Q.S. al-Insyirah?", opts: ["Kelapangan", "Kesedihan", "Kesulitan", "Kesempatan"], ans: 0, exp: "Al-Insyirah berasal dari kata syaraha yang artinya melapangkan / kelapangan (dada)." },
+                    { no: 9, elemen: "Al-Qur'an dan Hadis", q: "Apa yang dimaksud dengan \"<span class='arabic'>وَرَفَعْنَا لَكَ ذِكْرَكَ</span>\" dalam Q.S al-Insyirah?", opts: ["Meningkatkan ilmu", "Meninggikan derajatmu", "Memberikan kebahagiaan", "Menghapus kesedihan"], ans: 1, exp: "Ayat ke-4 'Wa rafa'naa laka dzikrak' artinya 'Dan Kami tinggikan sebutan (nama/derajat)mu bagimu'." },
+                    { no: 10, elemen: "Al-Qur'an dan Hadis", q: "Menurut Q.S. al-Insyirah, bagaimana sikap yang harus dimiliki ketika menghadapi ujian hidup?", opts: ["Mengeluh kepada orang lain", "Menghindari ujian tersebut", "Menyerah dan pasrah", "Berusaha dengan sabar dan percaya kepada Allah"], ans: 3, exp: "Menghadapi ujian hidup harus disertai kesabaran, ikhtiar sungguh-sungguh, dan tawakal kepada Allah Swt." },
+                    { no: 11, elemen: "Akidah", q: "Contoh bukti bahwa Allah memiliki sifat Al-Waliy adalah ....", opts: ["Manusia dapat hidup tanpa pertolongan", "Allah memberikan perlindungan kepada makhluk-Nya", "Manusia tidak membutuhkan Allah", "Semua manusia selalu mendapatkan kekayaan"], ans: 1, exp: "Al-Waliy artinya Allah Maha Melindungi; Allah senantiasa menjaga dan melindungi hamba-hamba-Nya yang beriman." },
+                    { no: 12, elemen: "Akidah", q: "Ketika mengalami musibah, sikap yang mencerminkan keyakinan kepada Al-Waliy adalah ....", opts: ["Putus asa dan marah", "Berdoa, bersabar, dan tetap berusaha", "Menyalahkan takdir", "Tidak mau meminta pertolongan Allah"], ans: 1, exp: "Meyakini Allah Maha Pelindung (Al-Waliy) membuat kita memohon perlindungan-Nya melalui doa, sabar, dan ikhtiar saat tertimpa musibah." },
+                    { no: 13, elemen: "Akidah", q: "Rina berhasil menjadi juara pertama dalam lomba membaca puisi. Teman-temannya memberikan ucapan selamat atas prestasinya. Rina kemudian berkata bahwa keberhasilannya merupakan karunia Allah dan ia tidak lupa mengucapkan Alhamdulillah. Sementara itu, ada teman yang mengatakan bahwa keberhasilan tersebut hanya karena kepintarannya sendiri. Berdasarkan Asmaul Husna Al-Hamid, perilaku yang paling tepat untuk diteladani adalah ....", opts: ["Merasa bangga karena memiliki kemampuan lebih daripada teman lainnya.", "Menganggap keberhasilan hanya berasal dari usaha diri sendiri.", "Bersyukur kepada Allah dan tetap rendah hati atas keberhasilan yang diperoleh.", "Meminta semua teman untuk memuji prestasi yang telah diraih."], ans: 2, exp: "Al-Hamid artinya Maha Terpuji; segala pujian hanya milik Allah sehingga saat berprestasi kita wajib bersyukur dan tetap rendah hati." },
+                    { no: 14, elemen: "Akidah", q: "Di kelas Fatimah, beberapa siswa sering mengeluh ketika mendapatkan tugas dari guru. Mereka kurang menyadari bahwa memiliki kesempatan untuk belajar merupakan nikmat Allah. Fatimah ingin mengajak teman-temannya membiasakan perilaku sesuai Asmaul Husna Al-Hamid. Rancangan kegiatan yang paling tepat untuk dilakukan Fatimah adalah ....", opts: ["Membuat kelompok untuk membandingkan kelebihan dan kekurangan setiap siswa.", "Menyusun kegiatan pembiasaan mengucapkan Alhamdulillah, berdoa, dan saling mengingatkan untuk bersyukur.", "Membuat daftar siswa yang paling banyak mendapatkan hadiah.", "Mengadakan perlombaan untuk menentukan siswa yang paling hebat di kelas."], ans: 1, exp: "Membiasakan mengucap Alhamdulillah dan saling mengingatkan dalam syukur adalah wujud nyata meneladani Al-Hamid." },
+                    { no: 15, elemen: "Akidah", q: "Ibu memiliki dua orang anak, yaitu Rani dan Riko. Ketika memberikan tugas membersihkan rumah, Ibu meminta Rani menyapu dan Riko mengepel lantai. Namun, Rani merasa tidak adil karena ia selalu mendapatkan tugas yang lebih banyak. Jika dikaitkan dengan Asmaul Husna Al-'Adl, tindakan yang sebaiknya dilakukan Ibu adalah ....", opts: ["Memberikan semua pekerjaan kepada Rani karena ia anak perempuan.", "Membebaskan Riko dari semua pekerjaan rumah.", "Membagi tugas secara seimbang sesuai kemampuan dan kondisi masing-masing anak.", "Membiarkan Rani mengerjakan semua pekerjaan rumah sendiri."], ans: 2, exp: "Al-'Adl artinya Maha Adil; adil berarti menempatkan sesuatu secara proporsional/seimbang sesuai porsi dan kemampuan." },
+                    { no: 16, elemen: "Akidah", q: "Pak Guru mengadakan lomba kebersihan kelas dan memberikan hadiah kepada kelas yang menang. Setelah lomba selesai, beberapa siswa mengusulkan agar hadiah dibagikan secara adil kepada anggota kelompok yang telah bekerja sama. Cara pembagian hadiah yang paling tepat untuk dirancang adalah ....", opts: ["Memberikan seluruh hadiah kepada ketua kelompok.", "Memberikan hadiah hanya kepada siswa yang paling populer.", "Membagikan hadiah berdasarkan kesepakatan dan kontribusi anggota dengan mempertimbangkan aturan lomba.", "Memberikan hadiah kepada siswa yang paling dekat dengan guru."], ans: 2, exp: "Keadilan dalam kelompok diwujudkan dengan pembagian yang transparan sesuai kesepakatan dan kontribusi anggota." },
+                    { no: 17, elemen: "Akidah", q: "Rafi mendapatkan tugas matematika dari gurunya. Ia merasa kesulitan mengerjakan soal tersebut karena belum memahami cara menghitungnya. Temannya menyarankan agar Rafi terus berlatih dan bertanya kepada guru. Namun, Rafi justru marah dan membuang bukunya karena tidak bisa mengerjakan soal. Berdasarkan Asmaul Husna As-Sabur, penilaian yang paling tepat terhadap sikap Rafi adalah ....", opts: ["Sikap Rafi benar karena setiap orang boleh marah ketika mengalami kesulitan.", "Sikap Rafi kurang tepat karena seharusnya bersabar, terus berusaha, dan tidak mudah menyerah.", "Sikap Rafi perlu ditiru agar tugas sekolah cepat selesai.", "Sikap Rafi wajar karena belajar merupakan kegiatan yang tidak menyenangkan."], ans: 1, exp: "As-Sabur artinya Maha Sabar; dalam menuntut ilmu kita harus sabar berlatih dan bertanya jika kesulitan, bukan marah." },
+                    { no: 18, elemen: "Akidah", q: "Dua kelompok siswa di kelas Rina sering bertengkar ketika mengerjakan tugas bersama. Rina ingin menciptakan suasana kelas yang damai dengan membiasakan perilaku sabar. Kegiatan yang paling tepat untuk dikembangkan Rina adalah ....", opts: ["Membuat kegiatan saling menyalahkan ketika terjadi kesalahan.", "Mengadakan kegiatan kerja sama, diskusi dengan tertib, saling mendengarkan, dan belajar memaafkan.", "Memisahkan semua siswa agar tidak perlu bekerja sama.", "Membuat aturan bahwa hanya ketua kelompok yang boleh berbicara."], ans: 1, exp: "Melatih diskusi tertib, saling mendengar, dan memaafkan akan membangun kesabaran dan kedamaian kelas." },
+                    { no: 19, elemen: "Akhlak", q: "Pak Ahmad mengetahui bahwa tetangganya, Pak Hasan, sedang sakit dan tidak dapat bekerja. Istri Pak Hasan juga sedang merawat anak-anaknya sehingga kesulitan mengurus kebutuhan rumah tangga. Pak Ahmad kemudian membantu membelikan makanan dan menjenguknya. Berdasarkan cerita tersebut, bentuk kepedulian Pak Ahmad terhadap tetangganya adalah ....", opts: ["Menunjukkan rasa iri terhadap keadaan tetangga.", "Mencampuri urusan pribadi keluarga tetangga.", "Melaksanakan adab bertetangga dengan menjenguk dan membantu tetangga yang membutuhkan.", "Mengharapkan imbalan atas bantuan yang diberikan."], ans: 2, exp: "Salah satu hak dan adab bertetangga dalam Islam adalah menjenguk ketika sakit dan membantu meringankan kesulitannya." },
+                    { no: 20, elemen: "Akhlak", q: "Suatu hari, keluarga Dina mengetahui bahwa tetangganya sedang mengalami kesulitan karena kendaraan yang digunakan untuk bekerja rusak. Ayah Dina ingin membantu, tetapi ia juga memiliki kesibukan pekerjaan. Tindakan yang paling tepat untuk dilakukan keluarga Dina adalah ....", opts: ["Mengabaikan kesulitan tetangga karena bukan urusan keluarga sendiri.", "Membantu sesuai kemampuan, misalnya menawarkan bantuan transportasi atau bantuan lain yang diperlukan.", "Menunggu tetangga meminta bantuan berkali-kali.", "Menceritakan kesulitan tetangga kepada orang lain."], ans: 1, exp: "Membantu tetangga yang kesusahan sesuai kemampuan kita adalah cerminan keimanan dan kepedulian sosial." },
+                    { no: 21, elemen: "Akhlak", q: "Pada hari Jumat, siswa kelas IV melaksanakan kegiatan membersihkan lingkungan sekolah. Ketika sedang menyapu halaman, Ahmad melihat Hasan kesulitan mengangkat tempat sampah yang berat. Ahmad kemudian menghampiri Hasan dan menawarkan bantuan. Ahmad teringat bahwa Allah Swt. memerintahkan umat Islam untuk saling membantu dalam kebaikan. Berdasarkan cerita tersebut, perilaku Ahmad yang sesuai dengan ajaran Islam adalah ....", opts: ["Membiarkan Hasan menyelesaikan pekerjaannya sendiri.", "Membantu Hasan karena merupakan bentuk perilaku ta'awun.", "Menertawakan Hasan karena tidak mampu mengangkat tempat sampah.", "Meninggalkan kegiatan kebersihan untuk bermain."], ans: 1, exp: "Ta'awun berarti tolong-menolong dalam kebaikan dan ketakwaan (QS. Al-Ma'idah: 2)." },
+                    { no: 22, elemen: "Akhlak", q: "Di lingkungan tempat tinggal Aisyah terdapat banyak sampah yang menumpuk. Sebagian warga tidak mau membersihkannya karena merasa bukan tanggung jawab mereka. Aisyah kemudian mengusulkan kepada ketua RT agar warga bekerja sama membersihkan lingkungan. Keputusan yang paling tepat berdasarkan nilai-nilai ajaran Islam adalah ....", opts: ["Membiarkan sampah menumpuk sampai ada petugas yang datang.", "Menyalahkan warga yang tidak ikut membersihkan lingkungan.", "Mengajak seluruh warga bermusyawarah dan melaksanakan kerja bakti bersama.", "Meminta satu orang warga membersihkan seluruh sampah."], ans: 2, exp: "Kebersihan lingkungan adalah tanggung jawab bersama yang diselesaikan lewat musyawarah dan gotong royong." },
+                    { no: 23, elemen: "Akhlak", q: "Sekolah akan mengadakan kegiatan bersama yang melibatkan seluruh siswa dari berbagai latar belakang agama. Ketua kelas ingin membuat kegiatan yang dapat mempererat persahabatan tanpa mengganggu keyakinan masing-masing siswa. Rancangan kegiatan yang paling tepat untuk dilakukan adalah ....", opts: ["Mengadakan kegiatan yang hanya melibatkan siswa dari satu agama.", "Mengadakan kegiatan kerja bakti, permainan kelompok, dan diskusi tentang pentingnya saling menghormati.", "Memaksa semua siswa mengikuti kegiatan ibadah agama tertentu.", "Memisahkan siswa berdasarkan agama ketika melakukan kegiatan bersama."], ans: 1, exp: "Kerja sama dalam kegiatan sosial kemasyarakatan (muamalah) mempererat persaudaraan tanpa mencampuri urusan akidah/ibadah." },
+                    { no: 24, elemen: "Akhlak", q: "Saat bermain bersama, Dika mendengar seorang temannya menggunakan kata-kata kasar kepada teman yang berbeda agama. Teman tersebut terlihat sedih dan tidak ingin bermain lagi. Dika ingin membantu menyelesaikan masalah tersebut dengan cara yang baik. Keputusan terbaik yang seharusnya dilakukan Dika adalah ....", opts: ["Ikut menggunakan kata-kata kasar agar dianggap berani.", "Membiarkan temannya terus berkata kasar.", "Menasihati temannya dengan sopan agar menghormati orang lain dan meminta maaf.", "Membalas perkataan kasar dengan perkataan yang lebih menyakitkan."], ans: 2, exp: "Islam mengajarkan menjaga lisan, menghormati sesama manusia, dan saling menasihati dengan cara yang santun." },
+                    { no: 25, elemen: "Akhlak", q: "Warga sebuah desa mengadakan kegiatan memperbaiki jalan yang rusak. Sebagian warga membawa peralatan, sebagian menyediakan makanan, dan sebagian lainnya membantu pekerjaan perbaikan. Namun, ada seorang warga yang hanya ingin menikmati hasil perbaikan tanpa ikut berkontribusi meskipun mampu membantu. Berdasarkan cerita tersebut, perilaku yang paling mencerminkan sikap mengutamakan maslahat bersama adalah ....", opts: ["Membiarkan orang lain bekerja karena hasilnya dapat dinikmati bersama.", "Mengutamakan kepentingan pribadi daripada kepentingan masyarakat.", "Ikut berkontribusi sesuai kemampuan agar pekerjaan bermanfaat bagi seluruh warga.", "Menolak membantu karena tidak mendapatkan keuntungan pribadi."], ans: 2, exp: "Mengutamakan kemaslahatan umum diwujudkan dengan berkontribusi aktif sesuai kemampuan demi kebaikan bersama." }
+                ]
+            }
+        };
+
+        // Catatan: Kisi-kisi kelas 6 pada halaman 9-13 memiliki soal nomor 26-45 (Zakat & Khulafaur Rasyidin) yang identik dengan nomor 26-45 di Kelas 4.
+        // Mari kita tambahkan soal nomor 26-45 ke Kelas 6 agar lengkap 45 soal persis sesuai file PDF Kelas 6!
+        bankSoal[6].subtitle = "Fase C / Kelas 6 Semester Ganjil • 45 Soal Pilihan Ganda (Opsi A - D)";
+        const extraKelas6 = [
+            { no: 26, elemen: "Fikih", q: "Zakat adalah ....", opts: ["sumbangan sukarela kapan saja", "harta tertentu yang wajib dikeluarkan muslim untuk diberikan kepada yang berhak", "hadiah untuk teman", "uang jajan yang ditabung"], ans: 1, exp: "Zakat adalah sejumlah harta tertentu yang diwajibkan Allah untuk dikeluarkan dan diberikan kepada golongan yang berhak (mustahik)." },
+            { no: 27, elemen: "Fikih", q: "Zakat yang dikeluarkan pada bulan Ramadan sebelum shalat Idulfitri disebut zakat ....", opts: ["Mal", "Perdagangan", "Fitrah", "Profesi"], ans: 2, exp: "Zakat Fitrah adalah zakat jiwa berupa makanan pokok yang wajib ditunaikan pada bulan Ramadan hingga sebelum salat Idulfitri." },
+            { no: 28, elemen: "Fikih", q: "Pak Anwar memiliki emas yang jumlahnya sudah mencapai nisab dan disimpan selama satu tahun. Zakat yang wajib dikeluarkan Pak Anwar adalah zakat ....", opts: ["Mal", "Fitrah", "Idulfitri", "Ramadan"], ans: 0, exp: "Zakat Mal (zakat harta) wajib dikeluarkan apabila harta seperti emas telah mencapai batas minimal (nisab) dan tersimpan selama 1 tahun (haul)." },
+            { no: 29, elemen: "Fikih", q: "Orang yang berhak menerima zakat disebut ....", opts: ["Muzaki", "Amil", "Muslim", "Mustahik"], ans: 3, exp: "Mustahik adalah 8 golongan orang yang berhak menerima zakat (QS. At-Taubah: 60), sedangkan orang yang membayar zakat disebut Muzaki." },
+            { no: 30, elemen: "Fikih", q: "Dalam simulasi pengumpulan zakat di sekolah, Dina bertugas menerima, mencatat, dan membagikan zakat. Peran Dina disebut ....", opts: ["Muzaki", "Amil", "Mustahik", "Fakir"], ans: 1, exp: "Amil zakat adalah panitia atau petugas yang mengelola pengumpulan, pencatatan, dan pendistribusian zakat." },
+            { no: 31, elemen: "Fikih", q: "Bu Siti bekerja sebagai buruh dan memiliki penghasilan, tetapi penghasilannya tidak cukup untuk memenuhi kebutuhan sehari-hari. Bu Siti termasuk golongan ....", opts: ["Fakir", "Gharimin", "Miskin", "Riqab"], ans: 2, exp: "Miskin adalah orang yang memiliki pekerjaan/penghasilan namun belum mencukupi kebutuhan dasar sehari-harinya." },
+            { no: 32, elemen: "Fikih", q: "Mengeluarkan sebagian harta secara sukarela untuk kebaikan, misalnya membangun masjid, disebut ....", opts: ["Infak", "Zakat fitrah", "Nisab", "Utang"], ans: 0, exp: "Infak adalah mengeluarkan sebagian harta di jalan Allah secara sukarela untuk kepentingan umum atau sosial tanpa batas nisab." },
+            { no: 33, elemen: "Fikih", q: "Sedekah tidak hanya berupa uang. Contoh sedekah yang bukan berupa uang adalah ....", opts: ["Membeli mainan baru", "Menabung di celengan", "Membeli makanan untuk diri sendiri", "Membantu teman yang kesulitan belajar"], ans: 3, exp: "Sedekah maknanya sangat luas mencakup segala kebaikan non-materi seperti senyum, tenaga, dan mengajarkan ilmu." },
+            { no: 34, elemen: "Fikih", q: "Rina menyisihkan Rp2.000 dari uang sakunya setiap hari Jumat untuk kotak infak kelas. Sikap Rina menunjukkan ....", opts: ["Sifat boros dan suka pamer", "Kepedulian dan cinta kepada sesama", "Keterpaksaan karena disuruh guru", "Keinginan mendapat pujian teman"], ans: 1, exp: "Membiasakan infak melatih keikhlasan, kepedulian sosial, dan rasa cinta kepada sesama." },
+            { no: 35, elemen: "Fikih", q: "Perhatikan pernyataan berikut!<br>1) Infak boleh dilakukan kapan saja.<br>2) Infak harus mencapai nisab terlebih dahulu.<br>3) Infak boleh dalam jumlah kecil.<br>4) Infak hanya untuk orang kaya.<br>Pernyataan yang benar tentang infak ditunjukkan oleh nomor ....", opts: ["1 dan 3", "1 dan 4", "2 dan 3", "2 dan 4"], ans: 0, exp: "Infak bersifat fleksibel: boleh dilakukan kapan saja (1) dan dalam jumlah berapa pun sesuai kemampuan (3)." },
+            { no: 36, elemen: "Sejarah Peradaban Islam", q: "Khulafaur Rasyidin artinya adalah ....", opts: ["Sahabat yang pandai berdagang", "Pemimpin yang kaya raya", "Pengganti Nabi yang memimpin dengan benar", "Panglima perang yang pemberani"], ans: 2, exp: "Khulafaur Rasyidin berarti para pemimpin pengganti Rasulullah saw. yang mendapat petunjuk dan memimpin dengan adil dan benar." },
+            { no: 37, elemen: "Sejarah Peradaban Islam", q: "Khalifah pertama setelah Nabi Muhammad saw. wafat adalah ....", opts: ["Abu Bakar Ash-Shiddiq", "Umar bin Khattab", "Utsman bin Affan", "Ali bin Abi Thalib"], ans: 0, exp: "Abu Bakar Ash-Shiddiq r.a. dibaiat menjadi khalifah pertama setelah wafatnya Rasulullah saw." },
+            { no: 38, elemen: "Sejarah Peradaban Islam", q: "Urutan Khulafaur Rasyidin yang benar adalah ....", opts: ["Umar, Abu Bakar, Utsman, Ali", "Abu Bakar, Utsman, Umar, Ali", "Ali, Abu Bakar, Umar, Utsman", "Abu Bakar, Umar, Utsman, Ali"], ans: 3, exp: "Urutan 4 Khulafaur Rasyidin: Abu Bakar Ash-Shiddiq, Umar bin Khattab, Utsman bin Affan, dan Ali bin Abi Thalib." },
+            { no: 39, elemen: "Sejarah Peradaban Islam", q: "Abu Bakar diberi gelar Ash-Shiddiq karena ia adalah ....", opts: ["Sangat berani di medan perang", "Selalu membenarkan berita Nabi, termasuk Isra Mikraj", "Paling kaya di antara para sahabat", "Pandai membuat peraturan"], ans: 1, exp: "Gelar Ash-Shiddiq (yang sangat membenarkan) diberikan karena Abu Bakar langsung membenarkan peristiwa Isra Mikraj tanpa keraguan." },
+            { no: 40, elemen: "Sejarah Peradaban Islam", q: "Abu Bakar memerintahkan agar Al-Qur'an dikumpulkan dalam satu mushaf. Alasan utama kebijakan tersebut adalah ....", opts: ["Agar Al-Qur'an dapat dijual", "Karena Al-Qur'an belum ada yang menghafal", "Banyak penghafal Al-Qur'an gugur di perang Yamamah", "Karena ingin mengganti isi Al-Qur'an"], ans: 2, exp: "Gugurnya banyak sahabat penghafal Al-Qur'an (huffaz) dalam Perang Yamamah mendorong Umar mengusulkan pembukuan Al-Qur'an kepada Abu Bakar." },
+            { no: 41, elemen: "Sejarah Peradaban Islam", q: "Umar bin Khattab diberi gelar ....", opts: ["Al-Faruq", "Ash-Shiddiq", "Dzunnurain", "Abu Turab"], ans: 0, exp: "Umar bin Khattab mendapat gelar Al-Faruq yang artinya pembeda antara yang hak (benar) dan yang batil (salah)." },
+            { no: 42, elemen: "Sejarah Peradaban Islam", q: "Umar bin Khattab memikul sendiri gandum untuk seorang ibu dan anak-anaknya yang kelaparan. Sikap Umar menunjukkan bahwa ia ....", opts: ["ingin dipuji rakyatnya", "tidak percaya kepada pembantunya", "mencari keuntungan pribadi", "sangat peduli dan bertanggung jawab kepada rakyatnya"], ans: 3, exp: "Kisah ini menunjukkan kerendahan hati, kepedulian, dan rasa tanggung jawab besar Umar bin Khattab sebagai pemimpin." },
+            { no: 43, elemen: "Sejarah Peradaban Islam", q: "Kebijakan Umar bin Khattab yang manfaatnya masih kita rasakan sampai sekarang adalah menetapkan ....", opts: ["Hari libur nasional", "Awal penanggalan tahun Hijriah", "Tahun Masehi", "Jam pelajaran sekolah"], ans: 1, exp: "Khalifah Umar bin Khattab menetapkan kalender Hijriah yang dimulai dari peristiwa hijrah Nabi Muhammad saw. ke Madinah." },
+            { no: 44, elemen: "Sejarah Peradaban Islam", q: "Pada masa Umar bin Khattab dibangun Baitul Mal. Fungsi Baitul Mal pada masa itu adalah ....", opts: ["Tempat berlatih perang", "Tempat tinggal para khalifah", "Tempat menyimpan harta negara untuk membantu rakyat", "Tempat berjualan para pedagang"], ans: 2, exp: "Baitul Mal berfungsi sebagai lembaga keuangan negara untuk mengelola zakat, pajak, dan harta negara demi kesejahteraan rakyat." },
+            { no: 45, elemen: "Sejarah Peradaban Islam", q: "Andi adalah ketua kelas. Cara Andi meneladani sikap adil Umar bin Khattab yang paling tepat adalah ....", opts: ["Membagi tugas piket hanya kepada teman dekatnya", "Membiarkan teman yang nakal tidak piket", "Memilih tugas yang paling ringan untuk dirinya", "Membagi tugas piket adil tanpa membeda-bedakan teman"], ans: 3, exp: "Keadilan seorang pemimpin di kelas diterapkan dengan membagi tugas secara merata dan adil tanpa pilih kasih." }
+        ];
+        bankSoal[6].questions = bankSoal[6].questions.concat(extraKelas6);
+        document.getElementById('tab-6').textContent = "Kelas 6 (45 Soal)";
+
+        // State Management
+        let currentGrade = 1;
+        let showAllAnswers = false;
+        let isExamMode = false;
+        let examSubmitted = false;
+        let userAnswers = { 1: {}, 2: {}, 3: {}, 4: {}, 5: {}, 6: {} };
+        const optionLetters = ['A', 'B', 'C', 'D'];
+
+        function selectGrade(grade) {
+            currentGrade = grade;
+            examSubmitted = false;
+            document.getElementById('examResultBanner').classList.add('hidden');
+            
+            // Update Tab Styles
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('tab-active');
+                btn.classList.add('bg-emerald-900/40', 'text-emerald-100');
+            });
+            const activeBtn = document.getElementById(`tab-${grade}`);
+            activeBtn.classList.add('tab-active');
+            activeBtn.classList.remove('bg-emerald-900/40', 'text-emerald-100');
+
+            // Update Header Info
+            const data = bankSoal[grade];
+            document.getElementById('gradeTitle').textContent = data.title;
+            document.getElementById('gradeSubtitle').textContent = data.subtitle;
+
+            // Populate Element Filter
+            const filterSelect = document.getElementById('elementFilter');
+            const elements = [...new Set(data.questions.map(q => q.elemen))];
+            filterSelect.innerHTML = '<option value="ALL">Semua Elemen / Bab</option>';
+            elements.forEach(el => {
+                const opt = document.createElement('option');
+                opt.value = el;
+                opt.textContent = el;
+                filterSelect.appendChild(opt);
+            });
+
+            document.getElementById('searchInput').value = '';
+            updateModeUI();
+            updateScore();
+            renderQuestions();
+        }
+
+        function toggleExamMode() {
+            isExamMode = !isExamMode;
+            examSubmitted = false;
+            showAllAnswers = false;
+            userAnswers[currentGrade] = {};
+            document.getElementById('toggleAnswersText').textContent = "Tampilkan Semua Kunci";
+            document.getElementById('examResultBanner').classList.add('hidden');
+            updateModeUI();
+            updateScore();
+            renderQuestions();
+            showToast(isExamMode ? "Mode Simulasi Ujian aktif! Kunci disembunyikan sampai selesai." : "Kembali ke Mode Belajar.");
+        }
+
+        function updateModeUI() {
+            const examBtnText = document.getElementById('examModeText');
+            const modeBadge = document.getElementById('modeBadge');
+            const liveStats = document.getElementById('liveStats');
+            const finishBtn = document.getElementById('finishExamBtn');
+            const toggleBtn = document.getElementById('toggleAnswersBtn');
+
+            if (isExamMode) {
+                examBtnText.textContent = "Keluar Mode Ujian";
+                modeBadge.textContent = "Mode Simulasi Ujian (Koreksi di Akhir)";
+                modeBadge.className = "bg-amber-100 text-amber-800 font-semibold px-2.5 py-0.5 rounded-lg border border-amber-300 text-xs";
+                liveStats.classList.toggle('hidden', !examSubmitted);
+                finishBtn.classList.toggle('hidden', examSubmitted);
+                toggleBtn.classList.add('hidden');
+            } else {
+                examBtnText.textContent = "Mode Ujian (Simulasi)";
+                modeBadge.textContent = "Mode Belajar (Langsung Koreksi)";
+                modeBadge.className = "bg-blue-50 text-blue-700 font-semibold px-2.5 py-0.5 rounded-lg border border-blue-200 text-xs";
+                liveStats.classList.remove('hidden');
+                finishBtn.classList.add('hidden');
+                toggleBtn.classList.remove('hidden');
+            }
+        }
+
+        function finishExam() {
+            const total = bankSoal[currentGrade].questions.length;
+            const answered = Object.keys(userAnswers[currentGrade]).length;
+            if (answered < total) {
+                showToast(`Masih ada ${total - answered} soal belum dijawab, namun hasil tetap ditampilkan.`);
+            }
+            examSubmitted = true;
+            updateModeUI();
+            updateScore();
+            renderQuestions();
+
+            const score = document.getElementById('scoreValue').textContent;
+            const correct = document.getElementById('correctCount').textContent;
+            const banner = document.getElementById('examResultBanner');
+            document.getElementById('examResultTitle').textContent = `Nilai Kamu: ${score}`;
+            document.getElementById('examResultDesc').textContent = `Kamu berhasil menjawab benar ${correct} dari ${total} soal. Gulir ke bawah untuk mempelajari pembahasannya!`;
+            banner.classList.remove('hidden');
+            banner.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function printWorkoutSheet() {
+            const prevShow = showAllAnswers;
+            showAllAnswers = false;
+            renderQuestions();
+            setTimeout(() => {
+                window.print();
+                showAllAnswers = prevShow;
+                renderQuestions();
+            }, 200);
+        }
+
+        function toggleAllAnswers() {
+            if (isExamMode && !examSubmitted) return;
+            showAllAnswers = !showAllAnswers;
+            const btnText = document.getElementById('toggleAnswersText');
+            btnText.textContent = showAllAnswers ? "Sembunyikan Semua Kunci" : "Tampilkan Semua Kunci";
+            renderQuestions();
+        }
+
+        function chooseOption(qNo, optIdx) {
+            if (isExamMode && examSubmitted) return;
+            userAnswers[currentGrade][qNo] = optIdx;
+            updateScore();
+            renderQuestions();
+        }
+
+        function resetQuiz() {
+            userAnswers[currentGrade] = {};
+            examSubmitted = false;
+            document.getElementById('examResultBanner').classList.add('hidden');
+            updateModeUI();
+            updateScore();
+            renderQuestions();
+            showToast("Jawaban latihan kelas " + currentGrade + " telah direset.");
+        }
+
+        function updateScore() {
+            const data = bankSoal[currentGrade].questions;
+            const answers = userAnswers[currentGrade];
+            const answeredKeys = Object.keys(answers);
+            let correct = 0;
+
+            answeredKeys.forEach(no => {
+                const qObj = data.find(item => item.no == no);
+                if (qObj && answers[no] === qObj.ans) {
+                    correct++;
+                }
+            });
+
+            const total = data.length;
+            const score = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+            document.getElementById('answeredCount').textContent = answeredKeys.length;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('scoreValue').textContent = score;
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            const data = bankSoal[currentGrade].questions;
+            const selectedEl = document.getElementById('elementFilter').value;
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            const answers = userAnswers[currentGrade];
+
+            const filtered = data.filter(item => {
+                const matchEl = selectedEl === 'ALL' || item.elemen === selectedEl;
+                const plainText = (item.q + ' ' + item.opts.join(' ')).replace(/<[^>]*>?/gm, '').toLowerCase();
+                const matchSearch = !searchQuery || plainText.includes(searchQuery) || String(item.no) === searchQuery;
+                return matchEl && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white rounded-2xl p-10 text-center border border-slate-200">
+                        <p class="text-slate-500 font-medium">Tidak ada soal yang sesuai dengan filter atau kata kunci pencarian.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = filtered.map(item => {
+                const userChoice = answers[item.no];
+                const isAnswered = userChoice !== undefined;
+                const reveal = isExamMode ? examSubmitted : (showAllAnswers || isAnswered);
+
+                const optionsHtml = item.opts.map((optText, idx) => {
+                    let btnClass = "border-slate-200 bg-slate-50/70 hover:bg-emerald-50/60 hover:border-emerald-300 text-slate-700";
+                    let badgeClass = "bg-white border-slate-300 text-slate-600";
+                    let iconHtml = "";
+
+                    if (!reveal && isAnswered && idx === userChoice) {
+                        btnClass = "border-blue-500 bg-blue-50 text-blue-950 font-medium ring-1 ring-blue-500";
+                        badgeClass = "bg-blue-600 border-blue-600 text-white";
+                        iconHtml = `<span class="ml-auto text-blue-600 font-semibold text-xs">Dipilih</span>`;
+                    } else if (reveal) {
+                        if (idx === item.ans) {
+                            btnClass = "border-emerald-500 bg-emerald-50/90 text-emerald-950 font-medium ring-1 ring-emerald-500";
+                            badgeClass = "bg-emerald-600 border-emerald-600 text-white";
+                            iconHtml = `<span class="ml-auto text-emerald-600 font-bold text-xs flex items-center gap-1">✓ Kunci</span>`;
+                        } else if (isAnswered && idx === userChoice && userChoice !== item.ans) {
+                            btnClass = "border-rose-400 bg-rose-50 text-rose-900";
+                            badgeClass = "bg-rose-500 border-rose-500 text-white";
+                            iconHtml = `<span class="ml-auto text-rose-600 font-bold text-xs">✕ Pilihanmu</span>`;
+                        }
+                    }
+
+                    return `
+                        <button onclick="chooseOption(${item.no}, ${idx})" class="w-full text-left p-3 rounded-xl border transition flex items-start gap-3 ${btnClass}">
+                            <span class="w-7 h-7 rounded-lg border flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ${badgeClass}">
+                                ${optionLetters[idx]}
+                            </span>
+                            <span class="text-sm md:text-base leading-relaxed pt-0.5">${optText}</span>
+                            ${iconHtml}
+                        </button>
+                    `;
+                }).join('');
+
+                const explanationHtml = reveal ? `
+                    <div class="mt-4 p-3.5 rounded-xl bg-amber-50/80 border border-amber-200/80 text-sm text-slate-700">
+                        <div class="flex items-center gap-2 font-bold text-amber-900 mb-1">
+                            <span class="bg-emerald-700 text-white text-xs px-2 py-0.5 rounded-md">Kunci Jawaban: ${optionLetters[item.ans]}</span>
+                            <span>Pembahasan Singkat:</span>
+                        </div>
+                        <p class="leading-relaxed text-slate-700">${item.exp}</p>
+                    </div>
+                ` : '';
+
+                return `
+                    <div class="question-card bg-white rounded-2xl p-5 md:p-6 shadow-sm border border-slate-200/90 transition hover:border-emerald-200">
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-2.5 py-1 rounded-lg">Soal No. ${item.no}</span>
+                                <span class="bg-slate-100 text-slate-600 font-medium text-xs px-2.5 py-1 rounded-lg">${item.elemen}</span>
+                            </div>
+                        </div>
+                        <div class="text-slate-900 text-sm md:text-base font-medium leading-relaxed mb-4">
+                            ${item.q}
+                        </div>
+                        <div class="space-y-2.5">
+                            ${optionsHtml}
+                        </div>
+                        ${explanationHtml}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function copyCurrentQuestions() {
+            const data = bankSoal[currentGrade];
+            let text = `${data.title.toUpperCase()}\n${data.subtitle}\n==========================================\n\n`;
+            
+            data.questions.forEach(item => {
+                const cleanQ = item.q.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>?/gm, '');
+                text += `${item.no}. ${cleanQ}\n`;
+                item.opts.forEach((opt, i) => {
+                    const cleanOpt = opt.replace(/<[^>]*>?/gm, '');
+                    text += `   ${optionLetters[i]}. ${cleanOpt}\n`;
+                });
+                text += `   Kunci Jawaban: ${optionLetters[item.ans]}\n`;
+                text += `   Pembahasan: ${item.exp}\n\n`;
+            });
+
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            showToast(`Seluruh soal & pembahasan Kelas ${currentGrade} disalin!`);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            selectGrade(1);
+        };
+    </script>
+</body>
+</html>
